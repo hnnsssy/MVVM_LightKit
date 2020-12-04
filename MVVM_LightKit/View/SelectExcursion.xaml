@@ -1,0 +1,101 @@
+﻿<Window x:Class="MVVM_LightKit.View.SelectExcursion"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MVVM_LightKit.View"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        mc:Ignorable="d"
+        Title="RegistrationWindow" Height="350" Width="600"
+        AllowsTransparency="True" Background="White"
+        WindowStyle="None" ResizeMode="NoResize">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="60"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Border Grid.ColumnSpan="2" Grid.RowSpan="3">
+            <Image Source="../Images/background.jpg" Stretch="UniformToFill"/>
+        </Border>
+        <StackPanel Orientation="Vertical" Margin="30,0,0,0">
+            <StackPanel Orientation="Horizontal">
+                <ComboBox 
+                          materialDesign:HintAssist.Hint="Тип экскурсии"
+                          materialDesign:HintAssist.HintOpacity=".68"
+                          materialDesign:HintAssist.Foreground="Wheat"
+                          materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="18">
+                    <ComboBoxItem>
+                        Городская
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        iOS
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        Linux
+                    </ComboBoxItem>
+                    <ComboBoxItem>
+                        Windows
+                    </ComboBoxItem>
+                </ComboBox>
+
+
+                <DatePicker
+                    Width="110"
+                    materialDesign:HintAssist.Hint="Дата"
+                    materialDesign:HintAssist.HintOpacity=".68"
+                    materialDesign:HintAssist.Foreground="Wheat"
+                    materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="18"
+                    Margin="40,0,0,15"
+                    
+                    Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+
+
+                <ComboBox 
+                          materialDesign:HintAssist.Hint="Цена от"
+                          materialDesign:HintAssist.HintOpacity=".68"
+                          materialDesign:HintAssist.Foreground="Wheat"
+                          materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="18"
+                          Margin="40,15,0,15">
+                    <ComboBoxItem Foreground="Black">
+                        от 1000
+                    </ComboBoxItem>
+                    <ComboBoxItem Foreground="Black">
+                        от 2000
+                    </ComboBoxItem>
+                    <ComboBoxItem Foreground="Black">
+                        от 3000
+                    </ComboBoxItem>
+                    <ComboBoxItem Foreground="Black">
+                        от 4000
+                    </ComboBoxItem>
+                </ComboBox>
+
+                <ComboBox 
+                          materialDesign:HintAssist.Hint="Цена до"
+                          materialDesign:HintAssist.HintOpacity=".68"
+                          materialDesign:HintAssist.Foreground="Wheat"
+                          materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="18"
+                          Margin="40,15,0,15">
+                    <ComboBoxItem Foreground="Black">
+                        от 2000
+                    </ComboBoxItem>
+                    <ComboBoxItem Foreground="Black">
+                        от 3000
+                    </ComboBoxItem>
+                    <ComboBoxItem Foreground="Black">
+                        от 4000
+                    </ComboBoxItem>
+                    <ComboBoxItem Foreground="Black">
+                        от 5000
+                    </ComboBoxItem>
+                </ComboBox>
+            </StackPanel>
+
+            <DataGrid 
+  ItemsSource="{Binding Items2}"
+  CanUserAddRows="False"
+  SelectionUnit="Cell"
+  SelectionMode="Extended" />
+        </StackPanel>
+    </Grid>
+</Window>
