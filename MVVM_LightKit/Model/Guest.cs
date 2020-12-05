@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
@@ -9,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MVVM_LightKit.Model
 {
-    public class Client : INotifyPropertyChanged
+    public class Guest : INotifyPropertyChanged
     {
         public int Id { get; set; }
 
@@ -25,25 +24,7 @@ namespace MVVM_LightKit.Model
         [NotMapped]
         private string phoneNumber;
 
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        [DataType(DataType.Date)]
-        public DateTime Birthday { get { return birthday; } set { birthday = value; OnPropertyChanged("Birthday"); } }
-        [NotMapped]
-        private DateTime birthday;
-
-        public string Email { get { return email; } set { email = value; OnPropertyChanged("Email"); } }
-        [NotMapped]
-        private string email;
-
-        public string Login { get { return login; } set { login = value; OnPropertyChanged("Login"); } }
-        [NotMapped]
-        private string login;
-
-        public string Password { get { return password; } set { password = value; OnPropertyChanged("Password"); } }
-        [NotMapped]
-        private string password;
-
-        public virtual ICollection<TicketSaleClient> TicketSaleClients { get; set; }
+        public virtual ICollection<TicketSaleGuest> TicketSaleGuests { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)

@@ -3,12 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:intr="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
         xmlns:local="clr-namespace:MVVM_LightKit"
         xmlns:vm="clr-namespace:MVVM_LightKit.ViewModel"
         mc:Ignorable="d"
         Title="WelcomeWindow" Height="220" Width="600"
         AllowsTransparency="True" Background="Transparent"
-        WindowStyle="None" ResizeMode="NoResize" >
+        WindowStyle="None" ResizeMode="NoResize">
+    <intr:Interaction.Triggers>
+        <intr:EventTrigger EventName="Loaded">
+            <intr:InvokeCommandAction Command="{Binding LoadDataBaseContex}"/>
+        </intr:EventTrigger>
+    </intr:Interaction.Triggers>
+    
     <Window.DataContext>
         <vm:MainWindowViewModel></vm:MainWindowViewModel>
     </Window.DataContext>

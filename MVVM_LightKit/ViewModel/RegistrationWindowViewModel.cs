@@ -1,5 +1,6 @@
 ﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using MVVM_LightKit.Model;
 using MVVM_LightKit.View;
 using System;
 using System.Collections.Generic;
@@ -10,7 +11,31 @@ using System.Threading.Tasks;
 namespace MVVM_LightKit.ViewModel
 {
     class RegistrationWindowViewModel : ViewModelBase
-    {    
+    {
+
+        private Client currentClient;
+        public Client CurrentClient
+        {
+            get { return currentClient; }
+            set { currentClient = value; RaisePropertyChanged("CurrentClient"); }
+        }
+
+        RelayCommand registerCommand;
+        public RelayCommand RegisterCommand
+        {
+            get
+            {
+                if (registerCommand == null)
+                    registerCommand = new RelayCommand(textBox_Login_GotFocus, true);
+                return registerCommand;
+            }
+        }
+
+        private void textBox_Login_GotFocus()
+        {
+            if (_textBoxLogin_Text == "Логин")
+                _textBoxLogin_Text = ""; //Закінчив на тому, що почав реалізовувати кнопку реєстрації (потрібно обробити клік)
+        }
 
         /*string _textBoxLogin_Text = "Логин";
         public string TextBoxLogin_Text

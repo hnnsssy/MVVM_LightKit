@@ -5,6 +5,7 @@ using MVVM_LightKit.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,18 @@ namespace MVVM_LightKit.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        RelayCommand _loadDataBaseContex;
+        public RelayCommand LoadDataBaseContex
+        {
+            get
+            {
+                if (_loadDataBaseContex == null)
+                    _loadDataBaseContex = new RelayCommand(new Action(()=> { Repositories.InitializeGenericRepositories(); }), true);
+                return _loadDataBaseContex;
+            }
+        }
+
+
         //OPEN REG WINDOW COMMAND
         RelayCommand _openRegistrationWindow;
         public RelayCommand OpenRegistrationWindow
@@ -69,6 +82,10 @@ namespace MVVM_LightKit.ViewModel
 
         private void button_SelectExcursion_Click()
         {
+/*            GenericUnitOfWork work = new GenericUnitOfWork(new RestDBContext(ConfigurationManager.ConnectionStrings["conStr"].ConnectionString));
+            IGenericRepository<Client> RClients = work.Repository<Client>();
+            List<Client> re = RClients.GetAll().ToList();*/
+
             SelectExcursion selectExcursion = new SelectExcursion();
             selectExcursion.Show();
         }

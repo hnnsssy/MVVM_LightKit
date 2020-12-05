@@ -5,25 +5,29 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MVVM_LightKit.View"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:vm="clr-namespace:MVVM_LightKit.ViewModel"
         mc:Ignorable="d"
-        Title="RegistrationWindow" Height="350" Width="600"
-        AllowsTransparency="True" Background="White"
+        Title="RegistrationWindow" Height="270" Width="600"
+        AllowsTransparency="True" Background="Green"
         WindowStyle="None" ResizeMode="NoResize">
+    <Window.DataContext>
+        <vm:SelectExcursionViewModel></vm:SelectExcursionViewModel>
+    </Window.DataContext>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <Border Grid.ColumnSpan="2" Grid.RowSpan="3">
-            <Image Source="../Images/background.jpg" Stretch="UniformToFill"/>
-        </Border>
-        <StackPanel Orientation="Vertical" Margin="30,0,0,0">
+        <Grid.Background>
+            <ImageBrush ImageSource="../Images/background.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <StackPanel Orientation="Vertical" Grid.RowSpan="2">
             <StackPanel Orientation="Horizontal">
                 <ComboBox 
                           materialDesign:HintAssist.Hint="Тип экскурсии"
                           materialDesign:HintAssist.HintOpacity=".68"
                           materialDesign:HintAssist.Foreground="Wheat"
-                          materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="18">
+                          materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="18"  Margin="30,0,0,0">
                     <ComboBoxItem>
                         Городская
                     </ComboBoxItem>
@@ -90,12 +94,30 @@
                     </ComboBoxItem>
                 </ComboBox>
             </StackPanel>
-
+            
+            
             <DataGrid 
-  ItemsSource="{Binding Items2}"
-  CanUserAddRows="False"
-  SelectionUnit="Cell"
-  SelectionMode="Extended" />
+                ItemsSource="{Binding ExcursionList}"
+                AutoGenerateColumns="False" Height="203"
+                CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" SelectionUnit="FullRow">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Name"
+                                    Width="auto"
+                                    Binding="{Binding Path=Name}" />
+                    <DataGridTextColumn Header="Duration"
+                                    Width="auto"
+                                    Binding="{Binding Path=Duration}" />
+                    <DataGridTextColumn Header="Date"
+                                    Width="auto"
+                                    Binding="{Binding Path=DateAndTime}" />
+                    <DataGridTextColumn Header="Type"
+                                    Width="auto"
+                                    Binding="{Binding Path=Type}" />
+                    <DataGridTextColumn Header="Description"
+                                    Width="auto"
+                                    Binding="{Binding Path=Description}" />
+                </DataGrid.Columns>
+            </DataGrid>
         </StackPanel>
     </Grid>
 </Window>
