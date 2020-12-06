@@ -25,11 +25,9 @@ namespace MVVM_LightKit.Model
         [NotMapped]
         private string phoneNumber;
 
-        [DisplayFormat(DataFormatString = "{0:dd-MM-yyyy}", ApplyFormatInEditMode = true)]
-        [DataType(DataType.Date)]
-        public DateTime Birthday { get { return birthday; } set { birthday = value; OnPropertyChanged("Birthday"); } }
+        public string Birthday { get { return birthday; } set { birthday = value; OnPropertyChanged("Birthday"); } }
         [NotMapped]
-        private DateTime birthday;
+        private string birthday;
 
         public string Email { get { return email; } set { email = value; OnPropertyChanged("Email"); } }
         [NotMapped]

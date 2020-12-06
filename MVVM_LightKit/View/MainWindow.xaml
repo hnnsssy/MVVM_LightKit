@@ -9,7 +9,8 @@
         mc:Ignorable="d"
         Title="WelcomeWindow" Height="220" Width="600"
         AllowsTransparency="True" Background="Transparent"
-        WindowStyle="None" ResizeMode="NoResize">
+        WindowStyle="None" ResizeMode="NoResize" Visibility="{Binding IsWindowVisible,Mode=TwoWay,Converter={StaticResource BooleanToVisibilityConverter}}">
+    
     <intr:Interaction.Triggers>
         <intr:EventTrigger EventName="Loaded">
             <intr:InvokeCommandAction Command="{Binding LoadDataBaseContex}"/>
@@ -19,6 +20,7 @@
     <Window.DataContext>
         <vm:MainWindowViewModel></vm:MainWindowViewModel>
     </Window.DataContext>
+    
     <Grid>
         <!--<Border CornerRadius="10" Grid.RowSpan="2">
             <Border.Background>
@@ -56,7 +58,7 @@
             <StackPanel Orientation="Horizontal" Margin="0,30,0,0" HorizontalAlignment="Center">
                 <Button x:Name="button_Login" Command="{Binding OpenLoginWindow}" Width="130" Height="45" Content="ВХОД" Margin="30,0,30,0"/>
                 <Button x:Name="button_Registration" Command="{Binding OpenRegistrationWindow}" Width="130" Height="45" Content="РЕГИСТРАЦИЯ" Margin="30,0,30,0"/>
-                <Button x:Name="button_Guest" Command="{Binding SelectExcursionWindow}" Width="130" Height="45" Content="ГОСТЬ" Margin="30,0,30,0"/>
+                <Button x:Name="button_Guest" Command="{Binding OpenGuestWindow}" Width="130" Height="45" Content="ГОСТЬ" Margin="30,0,30,0"/>
             </StackPanel>
         </StackPanel>
     </Grid>

@@ -5,13 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MVVM_LightKit.View" xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:vm="clr-namespace:MVVM_LightKit.ViewModel"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:intr="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
         mc:Ignorable="d"
         Title="RegistrationWindow" Height="350" Width="600"
         AllowsTransparency="True" Background="White"
-        WindowStyle="None" ResizeMode="NoResize">
+        WindowStyle="None" ResizeMode="NoResize" Visibility="{Binding IsWindowVisible,Mode=TwoWay,Converter={StaticResource BooleanToVisibilityConverter}}">
     <Window.DataContext>
         <vm:RegistrationWindowViewModel></vm:RegistrationWindowViewModel>
     </Window.DataContext>
+
+    <i:Interaction.Triggers>
+        <intr:EventTrigger EventName="Closing">
+            <intr:InvokeCommandAction Command="{Binding ApplicationExit}"/>
+        </intr:EventTrigger>
+    </i:Interaction.Triggers>
     <Grid>
         <Grid>
 
@@ -25,17 +32,17 @@
                 <RowDefinition/>
                 <RowDefinition Height="80"/>
             </Grid.RowDefinitions>
-            
-            <Border Grid.ColumnSpan="2" Grid.RowSpan="3">
-                <Image Source="../Images/background.jpg" Stretch="UniformToFill"/>
-            </Border>
-            
+
+            <Grid.Background>
+                <ImageBrush ImageSource="../Images/background.jpg" Stretch="UniformToFill"/>
+            </Grid.Background>
+
             <StackPanel Grid.ColumnSpan="2" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-                <materialDesign:PackIcon Kind="WindowMinimize"
+                <!--<materialDesign:PackIcon Kind="WindowMinimize"
                                          materialDesign:Foreground="AliceBlue" Width="30" Height="30" Margin="0,6,0,0"/>
                 <materialDesign:PackIcon Kind="WindowClose" 
                                          materialDesign:Foreground="AliceBlue" Width="30" Height="30" Margin="0,0,5,0">
-                </materialDesign:PackIcon>
+                </materialDesign:PackIcon>-->
             </StackPanel>
             <!--<StackPanel VerticalAlignment="Center" Grid.Column="0" Height="34" Margin="0,38,0,32">
                 <TextBlock Text="ОКНО РЕГИСТРАЦИИ"
@@ -56,7 +63,7 @@
                              materialDesign:HintAssist.Foreground="AliceBlue"
                              materialDesign:HintAssist.HintOpacity=".80"
                              materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Path = CurrectClient.SName}" FontSize="18" Foreground="AliceBlue" Margin="35,0,0,0" Width="250"/>
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Path = CurrentClient.SName}" FontSize="18" Foreground="AliceBlue" Margin="35,0,0,0" Width="250"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
@@ -64,7 +71,7 @@
                              materialDesign:HintAssist.Foreground="AliceBlue"
                              materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" 
                              materialDesign:HintAssist.HintOpacity=".80"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Path = CurrectClient.PName}" VerticalAlignment="Center" FontSize="18" Foreground="AliceBlue" Margin="35,0,0,0" Width="250"/>
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Path = CurrentClient.PName}" VerticalAlignment="Center" FontSize="18" Foreground="AliceBlue" Margin="35,0,0,0" Width="250"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
@@ -72,7 +79,7 @@
                              materialDesign:HintAssist.Foreground="AliceBlue"
                              materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" 
                              materialDesign:HintAssist.HintOpacity=".80"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Path = CurrectClient.PhoneNumber}" VerticalAlignment="Center" FontSize="18" Foreground="AliceBlue" Margin="35,0,0,0" Width="250"/>
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Path = CurrentClient.PhoneNumber}" VerticalAlignment="Center" FontSize="18" Foreground="AliceBlue" Margin="35,0,0,0" Width="250"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
@@ -80,7 +87,7 @@
                              materialDesign:HintAssist.Foreground="AliceBlue"
                              materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" 
                              materialDesign:HintAssist.HintOpacity=".80"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Path = CurrectClient.Birthday}" VerticalAlignment="Center" FontSize="18" Foreground="AliceBlue" Margin="35,0,0,0" Width="250"/>
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Path = CurrentClient.Birthday}" VerticalAlignment="Center" FontSize="18" Foreground="AliceBlue" Margin="35,0,0,0" Width="250"/>
                 </StackPanel>
             </StackPanel>
 
@@ -90,7 +97,7 @@
                              materialDesign:HintAssist.Foreground="AliceBlue"
                              materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" 
                              materialDesign:HintAssist.HintOpacity=".80"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Path = CurrectClient.Email}" VerticalAlignment="Center" FontSize="18" Foreground="AliceBlue" Margin="0,0,35,0" Width="250"/>
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Path = CurrentClient.Email}" VerticalAlignment="Center" FontSize="18" Foreground="AliceBlue" Margin="0,0,35,0" Width="250"/>
                 </StackPanel>
 
                 <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
@@ -98,7 +105,7 @@
                              materialDesign:HintAssist.Foreground="AliceBlue"
                              materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue"
                              materialDesign:HintAssist.HintOpacity=".80"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Path = CurrectClient.Login}" VerticalAlignment="Center" FontSize="18" Foreground="AliceBlue" Margin="0,0,35,0" Width="250"/>
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Path = CurrentClient.Login}" VerticalAlignment="Center" FontSize="18" Foreground="AliceBlue" Margin="0,0,35,0" Width="250"/>
                 </StackPanel>
 
 
@@ -108,7 +115,7 @@
                              materialDesign:HintAssist.Foreground="AliceBlue"
                              materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue"
                              materialDesign:HintAssist.HintOpacity=".80"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Path = CurrectClient.Password}" VerticalAlignment="Center" FontSize="18" Foreground="LightBlue" Margin="0,0,35,0" Width="250"/>
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Path = CurrentClient.Password}" VerticalAlignment="Center" FontSize="18" Foreground="LightBlue" Margin="0,0,35,0" Width="250"/>
                 </StackPanel>
 
                 <!--<StackPanel Orientation="Horizontal" Margin="0,10,0,0">
@@ -122,7 +129,7 @@
             </StackPanel>
 
             <StackPanel Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Center">
-                <Button Width="250" Height="40" Content="ЗАРЕГИСТРИРОВАТЬСЯ" Margin="0,25,0,0" Command="{Binding Path=SaveCommand}"/>
+                <Button Width="250" Height="40" Content="ЗАРЕГИСТРИРОВАТЬСЯ" Margin="0,25,0,0" Command="{Binding Path=RegisterCommand}"/>
             </StackPanel>
         </Grid>
     </Grid>

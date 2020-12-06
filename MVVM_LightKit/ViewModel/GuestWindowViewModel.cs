@@ -1,18 +1,17 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
+using MVVM_LightKit.Model;
+using MVVM_LightKit.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MVVM_LightKit.Model;
-using GalaSoft.MvvmLight.CommandWpf;
-using MVVM_LightKit.View;
 
 namespace MVVM_LightKit.ViewModel
 {
-    public class LoginWindowViewModel: ViewModelBase
+    class GuestWindowViewModel : ViewModelBase
     {
-
         private string message;
         public string Message
         {
@@ -20,16 +19,16 @@ namespace MVVM_LightKit.ViewModel
             set { message = value; RaisePropertyChanged("Message"); }
         }
 
-        private Client currentClient;
-        public Client CurrentClient
+        private Guest currentGuest;
+        public Guest CurrentGuest
         {
             get
             {
-                if (currentClient == null)
-                    currentClient = new Client();
-                return currentClient;
+                if (currentGuest == null)
+                    currentGuest = new Guest();
+                return currentGuest;
             }
-            set { currentClient = value; RaisePropertyChanged("CurrentClient"); }
+            set { currentGuest = value; RaisePropertyChanged("CurrentGuest"); }
         }
 
 
@@ -49,13 +48,19 @@ namespace MVVM_LightKit.ViewModel
         /// </summary>
         public void ExecuteLoginCommand()
         {
-            try { CurrentClient = Repositories.RClients.FindAll(x => x.Login == currentClient.Login && x.Password == currentClient.Password).First(); }
-            catch (Exception) { Message = "Неверный логин или пароль"; return; }
-            System.Windows.Application.Current.Resources["Login"] = CurrentClient.Login;
-            System.Windows.Application.Current.Resources["Password"] = CurrentClient.Password;
+            Guest tmpGuest = Repositories.RGuests.FindAll(x => x.SName == currentGuest.SName && x.PName == currentGuest.PName).FirstOrDefault(); //ЯКЩО ПРОСТО FIRST, ТО БУДЕ ЕКСЕШПН, БО ТАБЛИЦЯ ПУСТА
+            if (tmpGuest == null)
+            {
+                Repositories.RGuests.Add(CurrentGuest);
+                CurrentGuest = Repositories.RGuests.FindAll(x => x.SName == currentGuest.SName && x.PName == currentGuest.PName).FirstOrDefault();
+            }
+               
+            System.Windows.Application.Current.Resources["SName"] = CurrentGuest.SName;
+            System.Windows.Application.Current.Resources["PName"] = CurrentGuest.PName;
+            System.Windows.Application.Current.Resources["PhoneNumber"] = CurrentGuest.PhoneNumber;
             IsWindowVisible = false;
             SelectExcursion selectExcursion = new SelectExcursion();
-            selectExcursion.Show();
+            selectExcursion.Show(); //сюда треба буде передавати обжект, бо цю таблицю може використовувати і користувач і гість
         }
 
 

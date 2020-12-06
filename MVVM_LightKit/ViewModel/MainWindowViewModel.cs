@@ -16,16 +16,18 @@ namespace MVVM_LightKit.ViewModel
 {
     public class MainWindowViewModel : ViewModelBase
     {
+        //LOAD DB CONTEXT
         RelayCommand _loadDataBaseContex;
         public RelayCommand LoadDataBaseContex
         {
             get
             {
                 if (_loadDataBaseContex == null)
-                    _loadDataBaseContex = new RelayCommand(new Action(()=> { Repositories.InitializeGenericRepositories(); }), true);
+                    _loadDataBaseContex = new RelayCommand(new Action(()=> { Repositories.InitializeGenericRepositories(); Repositories.RClients.GetAll(); }), true);
                 return _loadDataBaseContex;
             }
         }
+        ////////////////////////////////////////////////////////
 
 
         //OPEN REG WINDOW COMMAND
@@ -42,6 +44,7 @@ namespace MVVM_LightKit.ViewModel
 
         private void button_Registration_Click()
         {
+            IsWindowVisible = false;
             RegistrationWindow registrationWindow = new RegistrationWindow();
             registrationWindow.Show();
         }
@@ -62,6 +65,7 @@ namespace MVVM_LightKit.ViewModel
 
         private void button_Login_Click()
         {
+            IsWindowVisible = false;
             LoginWindow loginWindow = new LoginWindow();
             loginWindow.Show();
         }
@@ -69,7 +73,25 @@ namespace MVVM_LightKit.ViewModel
 
 
         //OPEN LOGIN WINDOW COMMAND
-        RelayCommand _openSelectExcursionWindow;
+        RelayCommand openGuestWindow;
+        public RelayCommand OpenGuestWindow
+        {
+            get
+            {
+                if (openGuestWindow == null)
+                    openGuestWindow = new RelayCommand(button_Guest_Click, true);
+                return openGuestWindow;
+            }
+        }
+
+        private void button_Guest_Click()
+        {
+            IsWindowVisible = false;
+            GuestWindow guestWindow = new GuestWindow();
+            guestWindow.Show();
+        }
+
+        /*RelayCommand _openSelectExcursionWindow;
         public RelayCommand SelectExcursionWindow
         {
             get
@@ -82,16 +104,25 @@ namespace MVVM_LightKit.ViewModel
 
         private void button_SelectExcursion_Click()
         {
-/*            GenericUnitOfWork work = new GenericUnitOfWork(new RestDBContext(ConfigurationManager.ConnectionStrings["conStr"].ConnectionString));
-            IGenericRepository<Client> RClients = work.Repository<Client>();
-            List<Client> re = RClients.GetAll().ToList();*/
-
+            IsWindowVisible = false;
             SelectExcursion selectExcursion = new SelectExcursion();
             selectExcursion.Show();
-        }
+        }*/
         ////////////////////////////////////////////////////////
 
 
+        //WINDOW VISIBILITY
+        bool _isWindowVisible = true;
+        public bool IsWindowVisible
+        {
+            get { return _isWindowVisible; }
+            set
+            {
+                _isWindowVisible = value;
+                RaisePropertyChanged("IsWindowVisible");
+            }
+        }
+        ////////////////////////////////////////////////////////
 
 
 
