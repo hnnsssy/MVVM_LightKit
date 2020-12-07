@@ -21,9 +21,13 @@ namespace MVVM_LightKit.Model
         [NotMapped]
         private int duration;
 
-        public DateTime DateAndTime { get { return dateAndTime; } set { dateAndTime = value; OnPropertyChanged("DateAndTime"); } }
+        public int Price { get { return price; } set { price = value; OnPropertyChanged("Description"); } }
         [NotMapped]
-        private DateTime dateAndTime;
+        private int price;
+
+        public string ExDate { get { return exDate; } set { exDate = value; OnPropertyChanged("ExDate"); } }
+        [NotMapped]
+        private string exDate;
 
         public string Type { get { return type; } set { type = value; OnPropertyChanged("Type"); } }
         [NotMapped]
@@ -32,6 +36,7 @@ namespace MVVM_LightKit.Model
         public string Description { get { return description; } set { description = value; OnPropertyChanged("Description"); } }
         [NotMapped]
         private string description;
+
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)

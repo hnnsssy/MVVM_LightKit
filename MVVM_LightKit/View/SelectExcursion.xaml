@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:vm="clr-namespace:MVVM_LightKit.ViewModel" xmlns:intr="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="RegistrationWindow" Height="270" Width="600"
+        Title="RegistrationWindow" Height="370" Width="630"
         AllowsTransparency="True" Background="Green"
         WindowStyle="None" ResizeMode="NoResize">
     <Window.DataContext>
@@ -16,7 +16,7 @@
 
     <intr:Interaction.Triggers>
         <intr:EventTrigger EventName="Loaded">
-            <intr:InvokeCommandAction Command="{Binding SetCurrentClient}"/>
+            <intr:InvokeCommandAction Command="{Binding SetCurrentUser}"/>
         </intr:EventTrigger>
         <intr:EventTrigger EventName="Closing">
             <intr:InvokeCommandAction Command="{Binding ApplicationExit}"/>
@@ -36,17 +36,18 @@
                           materialDesign:HintAssist.Hint="Тип экскурсии"
                           materialDesign:HintAssist.HintOpacity=".68"
                           materialDesign:HintAssist.Foreground="Wheat"
-                          materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="18"  Margin="30,0,0,0">
-                    <ComboBoxItem>
+                          materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="18"  Margin="15,0,0,0"
+                          Text="{Binding SearchParamType}">
+                    <ComboBoxItem Foreground="Black">
                         Городская
-                    </ComboBoxItem>
-                    <ComboBoxItem>
+                    </ComboBoxItem >
+                    <ComboBoxItem Foreground="Black">
                         iOS
                     </ComboBoxItem>
-                    <ComboBoxItem>
+                    <ComboBoxItem Foreground="Black">
                         Linux
                     </ComboBoxItem>
-                    <ComboBoxItem>
+                    <ComboBoxItem Foreground="Black">
                         Windows
                     </ComboBoxItem>
                 </ComboBox>
@@ -58,57 +59,78 @@
                     materialDesign:HintAssist.HintOpacity=".68"
                     materialDesign:HintAssist.Foreground="Wheat"
                     materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="18"
-                    Margin="40,0,0,15"
-                    
+                    Margin="15,0,0,14"
+                    SelectedDate="{Binding
+                    Path=SearchParamDateTime,
+                    Mode=TwoWay}"
                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
-
-
                 <ComboBox 
                           materialDesign:HintAssist.Hint="Цена от"
                           materialDesign:HintAssist.HintOpacity=".68"
                           materialDesign:HintAssist.Foreground="Wheat"
                           materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="18"
-                          Margin="40,15,0,15">
-                    <ComboBoxItem Foreground="Black">
-                        от 1000
-                    </ComboBoxItem>
-                    <ComboBoxItem Foreground="Black">
-                        от 2000
-                    </ComboBoxItem>
-                    <ComboBoxItem Foreground="Black">
-                        от 3000
-                    </ComboBoxItem>
-                    <ComboBoxItem Foreground="Black">
-                        от 4000
-                    </ComboBoxItem>
+                          Margin="15,15,0,15"
+                          Text="{Binding SearchParamFrom}">
+                    <ComboBoxItem Foreground="Black" Content="от 1000"/>
+                    <ComboBoxItem Foreground="Black" Content="от 2000"/>
+                    <ComboBoxItem Foreground="Black" Content="от 3000"/>
+                    <ComboBoxItem Foreground="Black" Content="от 4000"/>
                 </ComboBox>
-
                 <ComboBox 
                           materialDesign:HintAssist.Hint="Цена до"
                           materialDesign:HintAssist.HintOpacity=".68"
                           materialDesign:HintAssist.Foreground="Wheat"
                           materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="18"
-                          Margin="40,15,0,15">
-                    <ComboBoxItem Foreground="Black">
-                        от 2000
-                    </ComboBoxItem>
-                    <ComboBoxItem Foreground="Black">
-                        от 3000
-                    </ComboBoxItem>
-                    <ComboBoxItem Foreground="Black">
-                        от 4000
-                    </ComboBoxItem>
-                    <ComboBoxItem Foreground="Black">
-                        от 5000
-                    </ComboBoxItem>
+                          Margin="15,15,0,15"
+                          Text="{Binding SearchParamTo}">
+                    <ComboBoxItem Foreground="Black" Content="до 2000"/>
+                    <ComboBoxItem Foreground="Black" Content="до 3000"/>
+                    <ComboBoxItem Foreground="Black" Content="до 4000"/>
+                    <ComboBoxItem Foreground="Black" Content="до 5000"/>
                 </ComboBox>
+
+                <TextBox
+              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+              materialDesign:HintAssist.Hint="Билеты"
+              Text="{Binding TicketAmount, Mode=TwoWay}"
+              Margin="15 0 0 17"
+                materialDesign:HintAssist.Foreground="Wheat"
+                materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue"
+              VerticalAlignment="Top" Foreground="AliceBlue" FontSize="19" Height="54" FontFamily="Segoe UI" HorizontalContentAlignment="Center"/>
+
+                <!--<TextBox 
+          Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+          materialDesign:HintAssist.Hint="Билеты"
+          Text="{Binding Content}"
+          Margin="15 0 0 15" FontWeight="Regular"
+          VerticalAlignment="Bottom" Foreground="AliceBlue" FontSize="19" Height="50" FontFamily="Segoe UI"/>-->
+
+                <Button Width="60" Height="50"  Command="{Binding SearchCommand}" Margin="15,8,0,0">
+                    <materialDesign:PackIcon
+                        Kind="Search"
+                        Height="24"
+                        Width="24" />
+                </Button>
             </StackPanel>
             
             
-            <DataGrid 
+            <DataGrid
                 ItemsSource="{Binding ExcursionList}"
-                AutoGenerateColumns="False" Height="203"
-                CanUserAddRows="False" CanUserDeleteRows="False" SelectionMode="Single" SelectionUnit="FullRow">
+                AutoGenerateColumns="False" Height="250"
+                CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" Background="AliceBlue" SelectionMode="Single" SelectionUnit="FullRow" SelectedIndex="{Binding SelectedIndex}">
+                <DataGrid.RowStyle>
+                    <Style TargetType="DataGridRow">
+                        <Style.Triggers>
+                            <Trigger Property="IsSelected"
+                        Value="True">
+                                <Setter Property="BorderBrush"
+                        Value="PapayaWhip" />
+                                <Setter Property="BorderThickness"
+                        Value="2" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </DataGrid.RowStyle>
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Name"
                                     Width="auto"
@@ -116,6 +138,9 @@
                     <DataGridTextColumn Header="Duration"
                                     Width="auto"
                                     Binding="{Binding Path=Duration}" />
+                    <DataGridTextColumn Header="Price"
+                                    Width="auto"
+                                    Binding="{Binding Path=Price}" />
                     <DataGridTextColumn Header="Date"
                                     Width="auto"
                                     Binding="{Binding Path=DateAndTime}" />
@@ -123,10 +148,15 @@
                                     Width="auto"
                                     Binding="{Binding Path=Type}" />
                     <DataGridTextColumn Header="Description"
-                                    Width="auto"
+                                    Width="250"
                                     Binding="{Binding Path=Description}" />
                 </DataGrid.Columns>
             </DataGrid>
+
+
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+                <Button Width="250" Height="40" Content="Забронировать" Command="{Binding ReservationCommand}" HorizontalAlignment="Center"/>
+            </StackPanel>
         </StackPanel>
     </Grid>
 </Window>
