@@ -8,7 +8,7 @@
         xmlns:vm="clr-namespace:MVVM_LightKit.ViewModel" xmlns:intr="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
         Title="RegistrationWindow" Height="370" Width="630"
-        AllowsTransparency="True" Background="Green"
+        AllowsTransparency="True"
         WindowStyle="None" ResizeMode="NoResize">
     <Window.DataContext>
         <vm:SelectExcursionViewModel></vm:SelectExcursionViewModel>
@@ -64,6 +64,15 @@
                     Path=SearchParamDateTime,
                     Mode=TwoWay}"
                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
+                <TextBox
+              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+              materialDesign:HintAssist.Hint="Билеты"
+              Text="{Binding TicketAmount, Mode=TwoWay}"
+              Margin="15 0 0 17"
+                materialDesign:HintAssist.Foreground="Wheat"
+                materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue"
+              VerticalAlignment="Top" Foreground="AliceBlue" FontSize="19" Height="54" FontFamily="Segoe UI" HorizontalContentAlignment="Center"/>
+                
                 <ComboBox 
                           materialDesign:HintAssist.Hint="Цена от"
                           materialDesign:HintAssist.HintOpacity=".68"
@@ -89,14 +98,7 @@
                     <ComboBoxItem Foreground="Black" Content="до 5000"/>
                 </ComboBox>
 
-                <TextBox
-              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-              materialDesign:HintAssist.Hint="Билеты"
-              Text="{Binding TicketAmount, Mode=TwoWay}"
-              Margin="15 0 0 17"
-                materialDesign:HintAssist.Foreground="Wheat"
-                materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue"
-              VerticalAlignment="Top" Foreground="AliceBlue" FontSize="19" Height="54" FontFamily="Segoe UI" HorizontalContentAlignment="Center"/>
+                
 
                 <!--<TextBox 
           Style="{StaticResource MaterialDesignFloatingHintTextBox}"
@@ -143,12 +145,12 @@
                                     Binding="{Binding Path=Price}" />
                     <DataGridTextColumn Header="Date"
                                     Width="auto"
-                                    Binding="{Binding Path=DateAndTime}" />
+                                    Binding="{Binding Path=ExDate}" />
                     <DataGridTextColumn Header="Type"
                                     Width="auto"
                                     Binding="{Binding Path=Type}" />
                     <DataGridTextColumn Header="Description"
-                                    Width="250"
+                                    Width="215"
                                     Binding="{Binding Path=Description}" />
                 </DataGrid.Columns>
             </DataGrid>

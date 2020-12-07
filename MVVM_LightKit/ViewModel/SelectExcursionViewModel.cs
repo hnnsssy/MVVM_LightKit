@@ -106,12 +106,14 @@ namespace MVVM_LightKit.ViewModel
         {
             Excursion excursion = Repositories.RExcursions.FindById(ExcursionList[SelectedIndex].Id);
             TicketSale ticketSale = Repositories.RTicketSales.FindAll(x => x.Excursion.Id == excursion.Id).FirstOrDefault();
-            Repositories.RTicketSaleClients.Add(new TicketSaleClient() { Client = CurrentClient, TicketSale = ticketSale, TicketAmount = TicketAmount }); //закінчив на тому, що доробив резервація АЛЕ ТІЛЬК ДЛЯ КЛІЄНТА, потрібно ше для юзера
+            if(CurrentClient.Login != null)
+                Repositories.RTicketSaleClients.Add(new TicketSaleClient() { Client = CurrentClient, TicketSale = ticketSale, TicketAmount = (int)TicketAmount });
+            else Repositories.RTicketSaleGuests.Add(new TicketSaleGuest() { Guest = CurrentGuest, TicketSale = ticketSale, TicketAmount = (int)TicketAmount });
         }
 
         public bool CanExecuteReservationCommand()
         {
-            return SelectedIndex >= 0;
+            return SelectedIndex >= 0 && TicketAmount > 0;
         }
 
         private string searchParamType;
@@ -183,8 +185,8 @@ namespace MVVM_LightKit.ViewModel
             return !string.IsNullOrEmpty(SearchParamType) && !string.IsNullOrEmpty(SearchParamFrom) && !string.IsNullOrEmpty(SearchParamTo) && !string.IsNullOrEmpty(SearchParamType) && TicketAmount > 0; 
         }
 
-        private int ticketAmount;
-        public int TicketAmount
+        private int? ticketAmount;
+        public int? TicketAmount
         {
             get { return ticketAmount; }
             set { ticketAmount = value; RaisePropertyChanged("TicketAmount"); }

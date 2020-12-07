@@ -70,7 +70,7 @@ namespace MVVM_LightKit.ViewModel
             loginWindow.Show();
         }
         ////////////////////////////////////////////////////////
-
+        
 
         //OPEN LOGIN WINDOW COMMAND
         RelayCommand openGuestWindow;
@@ -90,24 +90,29 @@ namespace MVVM_LightKit.ViewModel
             GuestWindow guestWindow = new GuestWindow();
             guestWindow.Show();
         }
+        ////////////////////////////////////////////////////////
 
-        /*RelayCommand _openSelectExcursionWindow;
-        public RelayCommand SelectExcursionWindow
+
+
+
+        //OPEN LOGIN WINDOW COMMAND
+        RelayCommand openAdminWindow;
+        public RelayCommand OpenAdminWindow
         {
             get
             {
-                if (_openSelectExcursionWindow == null)
-                    _openSelectExcursionWindow = new RelayCommand(button_SelectExcursion_Click, true);
-                return _openSelectExcursionWindow;
+                if (openAdminWindow == null)
+                    openAdminWindow = new RelayCommand(button_Admin_Click, true);
+                return openAdminWindow;
             }
         }
 
-        private void button_SelectExcursion_Click()
+        private void button_Admin_Click()
         {
             IsWindowVisible = false;
-            SelectExcursion selectExcursion = new SelectExcursion();
-            selectExcursion.Show();
-        }*/
+            AdminWindow adminWindow = new AdminWindow();
+            adminWindow.Show();
+        }
         ////////////////////////////////////////////////////////
 
 
@@ -123,82 +128,6 @@ namespace MVVM_LightKit.ViewModel
             }
         }
         ////////////////////////////////////////////////////////
-
-
-
-
-
-
-
-
-
-
-
-        /*public RelayCommand OpenRegistrationWindow { get; set; }
-        public MainWindowViewModel()
-        {
-            OpenRegistrationWindow = new RelayCommand(button_Registration_Click, true);
-        }*/
-
-
-
-        /*Client _currentClient;
-        public Client CurrentClient
-        {
-            get
-            {
-                if (_currentClient == null)
-                    _currentClient = new Client();
-                return _currentClient;
-            }
-            set
-            {
-                _currentClient = value;
-
-
-                RaisePropertyChanged("CurrentClient");
-            }
-        }
-
-
-        ObservableCollection<Client> _clients;
-        public ObservableCollection<Client> Clients
-        {
-            get
-            {
-                if (_clients == null)
-                    _clients = ClientRepository.AllClients;
-                return _clients;
-            }
-        }*/
-
-
-        /*RelayCommand _addClientCommand;
-        public RelayCommand AddClient
-        {
-            get
-            {
-                if (_addClientCommand == null)
-                    _addClientCommand = new RelayCommand(ExecuteAddClientCommand, CanExecuteAddClientCommand);
-                return _addClientCommand;
-            }
-        }
-
-
-        public void ExecuteAddClientCommand()
-        {
-            Clients.Add(_currentClient);
-            CurrentClient = null;
-        }
-
-
-        public bool CanExecuteAddClientCommand()
-        {
-            if (string.IsNullOrEmpty(CurrentClient.FirstName) ||
-                string.IsNullOrEmpty(CurrentClient.LastName))
-                return false;
-            return true;
-        }*/
     }
 }
 
