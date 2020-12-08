@@ -38,7 +38,7 @@ namespace MVVM_LightKit.ViewModel
 
         RelayCommand _setCurrentUser;
         public RelayCommand SetCurrentUser
-        { //CurrentClient = Repositories.RClients.FindAll(x => x.Login = System.Windows.Application.Current.Resources["Login"]);
+        {
             get
             {
                 if (_setCurrentUser == null)
@@ -173,7 +173,7 @@ namespace MVVM_LightKit.ViewModel
             ExcursionList.Clear();
             foreach (Excursion item in tmp_excursions)
             {
-                if (Repositories.RTicketSales.FindAll(x => x.Excursion.Id == item.Id).Count() > 0)
+                if (Repositories.RTicketSales.FindAll(x => x.Excursion.Id == item.Id && x.Amount >= TicketAmount).Count() > 0)
                     ExcursionList.Add(item);
             }
             //List<TicketSale> ticketSales = Repositories.RTicketSales.FindAll(y => y.Excursion.Id == x.Id).FirstOrDefault().Excursion.Id))

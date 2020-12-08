@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:vm="clr-namespace:MVVM_LightKit.ViewModel" xmlns:intr="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Title="RegistrationWindow" Height="370" Width="630"
+        Title="RegistrationWindow" Height="410" Width="630"
         AllowsTransparency="True"
         WindowStyle="None" ResizeMode="NoResize">
     <Window.DataContext>
@@ -24,13 +24,23 @@
     </intr:Interaction.Triggers>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="60"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+
         <Grid.Background>
             <ImageBrush ImageSource="../Images/background.jpg" Stretch="UniformToFill"/>
         </Grid.Background>
-        <StackPanel Orientation="Vertical" Grid.RowSpan="2">
+
+        <materialDesign:PackIcon Grid.Row="0" Grid.Column="1" Kind="Close" Width="30" Height="30" HorizontalAlignment="Right" Foreground="White">
+            <intr:Interaction.Triggers>
+                <intr:EventTrigger EventName="MouseDown">
+                    <intr:InvokeCommandAction Command="{Binding ApplicationExit}"/>
+                </intr:EventTrigger>
+            </intr:Interaction.Triggers>
+        </materialDesign:PackIcon>
+        <StackPanel Orientation="Vertical" Grid.RowSpan="2" Grid.Row="1">
             <StackPanel Orientation="Horizontal">
                 <ComboBox 
                           materialDesign:HintAssist.Hint="Тип экскурсии"
@@ -116,7 +126,7 @@
             </StackPanel>
             
             
-            <DataGrid
+            <DataGrid 
                 ItemsSource="{Binding ExcursionList}"
                 AutoGenerateColumns="False" Height="250"
                 CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" Background="AliceBlue" SelectionMode="Single" SelectionUnit="FullRow" SelectedIndex="{Binding SelectedIndex}">
@@ -156,7 +166,7 @@
             </DataGrid>
 
 
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,5,0,0">
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
                 <Button Width="250" Height="40" Content="Забронировать" Command="{Binding ReservationCommand}" HorizontalAlignment="Center"/>
             </StackPanel>
         </StackPanel>

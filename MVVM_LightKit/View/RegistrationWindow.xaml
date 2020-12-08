@@ -20,8 +20,15 @@
         </intr:EventTrigger>
     </i:Interaction.Triggers>
     <Grid>
-        <Grid>
+        <materialDesign:PackIcon Grid.Row="1" Kind="Close" Width="30" Height="30" HorizontalAlignment="Right" Foreground="White">
+            <intr:Interaction.Triggers>
+                <intr:EventTrigger EventName="MouseDown">
+                    <intr:InvokeCommandAction Command="{Binding ApplicationExit}"/>
+                </intr:EventTrigger>
+            </intr:Interaction.Triggers>
+        </materialDesign:PackIcon>
 
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition/>
@@ -37,24 +44,13 @@
                 <ImageBrush ImageSource="../Images/background.jpg" Stretch="UniformToFill"/>
             </Grid.Background>
 
-            <StackPanel Grid.ColumnSpan="2" Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Right">
-                <!--<materialDesign:PackIcon Kind="WindowMinimize"
-                                         materialDesign:Foreground="AliceBlue" Width="30" Height="30" Margin="0,6,0,0"/>
-                <materialDesign:PackIcon Kind="WindowClose" 
-                                         materialDesign:Foreground="AliceBlue" Width="30" Height="30" Margin="0,0,5,0">
-                </materialDesign:PackIcon>-->
-            </StackPanel>
-            <!--<StackPanel VerticalAlignment="Center" Grid.Column="0" Height="34" Margin="0,38,0,32">
-                <TextBlock Text="ОКНО РЕГИСТРАЦИИ"
-                           FontWeight="Regular"
-                           FontFamily="helvetica"
-                           FontSize="28"
-                           Foreground="White"
-                           HorizontalAlignment="Center"
-                           />
-            </StackPanel>-->
-
-
+            <materialDesign:PackIcon Grid.Row="0" Grid.Column="1" Kind="Close" Width="30" Height="30" HorizontalAlignment="Right" Foreground="White">
+                <intr:Interaction.Triggers>
+                    <intr:EventTrigger EventName="MouseDown">
+                        <intr:InvokeCommandAction Command="{Binding ApplicationExit}"/>
+                    </intr:EventTrigger>
+                </intr:Interaction.Triggers>
+            </materialDesign:PackIcon>
 
             <StackPanel Grid.Column="0" Grid.Row="1" Margin="0,5,0,0">
 
@@ -117,15 +113,6 @@
                              materialDesign:HintAssist.HintOpacity=".80"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Path = CurrentClient.Password}" VerticalAlignment="Center" FontSize="18" Foreground="LightBlue" Margin="0,0,35,0" Width="250"/>
                 </StackPanel>
-
-                <!--<StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                    <TextBox
-                        materialDesign:HintAssist.Hint="Повторите пароль"
-                             materialDesign:HintAssist.Foreground="AliceBlue"
-                             materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue"
-                             materialDesign:HintAssist.HintOpacity=".80"
-                        Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Path = CurrectClient.Password}" VerticalAlignment="Center" FontSize="18" Foreground="LightBlue" Margin="0,0,35,0" Width="250"/>
-                </StackPanel>-->
             </StackPanel>
 
             <StackPanel Grid.ColumnSpan="2" Grid.Row="2" HorizontalAlignment="Center">

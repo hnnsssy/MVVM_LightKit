@@ -128,6 +128,23 @@ namespace MVVM_LightKit.ViewModel
             }
         }
         ////////////////////////////////////////////////////////
+
+
+        RelayCommand applicationExit;
+        public RelayCommand ApplicationExit
+        {
+            get
+            {
+                if (applicationExit == null)
+                    applicationExit = new RelayCommand(ExecuteAppExitCommand, true);
+                return applicationExit;
+            }
+        }
+
+        public void ExecuteAppExitCommand()
+        {
+            System.Windows.Application.Current.Shutdown();
+        }
     }
 }
 

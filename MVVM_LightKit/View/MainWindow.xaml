@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:intr="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity" 
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:local="clr-namespace:MVVM_LightKit"
         xmlns:vm="clr-namespace:MVVM_LightKit.ViewModel"
         mc:Ignorable="d"
@@ -22,18 +23,23 @@
     </Window.DataContext>
     
     <Grid>
-        <!--<Border CornerRadius="10" Grid.RowSpan="2">
-            <Border.Background>
-                <LinearGradientBrush>
-                    <GradientStop Color="#D3CCE3" Offset="0.0"/>
-                    <GradientStop Color="#8f94fb" Offset="1"/>
-                </LinearGradientBrush>
-            </Border.Background>
-        </Border>-->
-        <Border>
-            <Image Source="../Images/background.jpg" Stretch="UniformToFill"/>
-        </Border>
-        <StackPanel VerticalAlignment="Center">
+        <Grid.Background>
+            <ImageBrush ImageSource="../Images/background.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <materialDesign:PackIcon Grid.Row="0" Kind="Close" Width="30" Height="30" HorizontalAlignment="Right" Foreground="White">
+            <intr:Interaction.Triggers>
+                <intr:EventTrigger EventName="MouseDown">
+                    <intr:InvokeCommandAction Command="{Binding ApplicationExit}"/>
+                </intr:EventTrigger>
+            </intr:Interaction.Triggers>
+        </materialDesign:PackIcon>
+
+        <StackPanel VerticalAlignment="Center" Grid.Row="1">
             <TextBlock Text="Вас приветствует система планирования экскурсий"
                            FontWeight="Light"
                            FontFamily="Microsoft Sans Serif"

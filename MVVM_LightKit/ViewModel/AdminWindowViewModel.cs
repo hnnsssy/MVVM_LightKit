@@ -24,11 +24,18 @@ namespace MVVM_LightKit.ViewModel
             set { excursionList = value; RaisePropertyChanged("ExcursionList"); }
         }
 
-        private int selectedIndex;
-        public int SelectedIndex
+
+
+        private int? selectedIndex;
+        public int? SelectedIndex
         {
             get { return selectedIndex; }
-            set { selectedIndex = value; CurrentExcursion = Repositories.RExcursions.FindById(ExcursionList[value].Id); RaisePropertyChanged("SelectedIndex"); }
+            set { 
+                selectedIndex = value; 
+                CurrentExcursion = Repositories.RExcursions.FindById(ExcursionList[(int)value].Id);
+                CurrentTicket = Repositories.RTicketSales.FindAll(x => x.Excursion.Id == CurrentExcursion.Id).FirstOrDefault();
+                RaisePropertyChanged("SelectedIndex"); 
+            }
         }
 
         private string name;
@@ -38,15 +45,15 @@ namespace MVVM_LightKit.ViewModel
             set { name = value; RaisePropertyChanged("Name"); }
         }
 
-        private int duration;
-        public int Duration
+        private int? duration;
+        public int? Duration
         {
             get { return duration; }
             set { duration = value; RaisePropertyChanged("Duration"); }
         }
 
-        private int price;
-        public int Price
+        private int? price;
+        public int? Price
         {
             get { return price; }
             set { price = value; RaisePropertyChanged("Price"); }
@@ -74,18 +81,48 @@ namespace MVVM_LightKit.ViewModel
             set { description = value; RaisePropertyChanged("Description"); }
         }
 
+        private int? ticketAmount;
+        public int? TicketAmount
+        {
+            get { return ticketAmount; }
+            set { ticketAmount = value; RaisePropertyChanged("TicketAmount"); }
+        }
+
+        private int? ticketPrice;
+        public int? TicketPrice
+        {
+            get { return ticketPrice; }
+            set { ticketPrice = value; RaisePropertyChanged("TicketPrice"); }
+        }
+
+        private string ticketNotes;
+        public string TicketNotes
+        {
+            get { return ticketNotes; }
+            set { ticketNotes = value; RaisePropertyChanged("TicketNotes"); }
+        }
 
         private Excursion currentExcursion;
         public Excursion CurrentExcursion
         {
-            get
-            {
-                if (currentExcursion == null)
-                    currentExcursion = new Excursion();
-                return currentExcursion;
-            }
+            get { return currentExcursion; }
             set { currentExcursion = value; RaisePropertyChanged("CurrentExcursion"); }
         }
+
+        private TicketSale currentTicket;
+        public TicketSale CurrentTicket
+        {
+            get { return currentTicket; }
+            set { currentTicket = value; RaisePropertyChanged("CurrentExcursion"); }
+        }
+
+        private string buttonAddFunction = "Добавить";
+        public string ButtonAddFunction
+        {
+            get { return buttonAddFunction; }
+            set { buttonAddFunction = value; RaisePropertyChanged("ButtonAddFunction"); }
+        }
+
 
         RelayCommand addCommand;
         public RelayCommand AddCommand
@@ -100,13 +137,73 @@ namespace MVVM_LightKit.ViewModel
 
         public void ExecuteAddCommand()
         {
-            Repositories.RExcursions.Add(new Excursion() { Name = Name, Price = Price, ExDate = ExDate, Type = Type, Duration = Duration, Description = Description });
-            //ExcursionList = null;
+            if (buttonAddFunction == "Добавить")
+            {
+                Excursion exc = new Excursion() { Name = Name, Price = (int)Price, ExDate = ExDate, Type = Type, Duration = (int)Duration, Description = Description };
+                Repositories.RExcursions.Add(exc);
+                Repositories.RTicketSales.Add(new TicketSale() { Excursion = exc, Price = (int)TicketPrice, Amount = (int)TicketAmount, Notes = TicketNotes });
+                ClearFields();
+            }
+            else
+            {
+                CurrentExcursion.Name = Name;
+                CurrentExcursion.Price = (int)Price;
+                CurrentExcursion.ExDate = ExDate;
+                CurrentExcursion.Type = Type;
+                CurrentExcursion.Duration = (int)Duration;
+                CurrentExcursion.Description = Description;
+                Repositories.RExcursions.Update(CurrentExcursion);
+
+                CurrentTicket.Amount = (int)TicketAmount;
+                CurrentTicket.Price = (int)TicketPrice;
+                CurrentTicket.Notes = TicketNotes;
+                Repositories.RTicketSales.Update(CurrentTicket);
+
+                ClearFields();
+                ButtonAddFunction = "Добавить";
+            }
+        }
+
+        public void ClearFields()
+        {
+            ExcursionList = null;
+            Name = "";
+            Type = "";
+            ExDate = "";
+            Description = "";
+            Duration = null;
+            Price = null;
+            TicketAmount = null;
+            TicketPrice = null;
+            TicketNotes = "";
         }
 
         public bool CanExecuteAddCommand()
         {
-            return !string.IsNullOrEmpty(Name) && Duration > 0 && Price > 0 && !string.IsNullOrEmpty(ExDate) && !string.IsNullOrEmpty(Type) && !string.IsNullOrEmpty(Description);
+            return !string.IsNullOrEmpty(Name) && Duration > 0 && Price > 0 && !string.IsNullOrEmpty(ExDate) && !string.IsNullOrEmpty(Type) && !string.IsNullOrEmpty(Description) && TicketAmount > 0;
+        }
+
+        RelayCommand deleteCommand;
+        public RelayCommand DeleteCommand
+        {
+            get
+            {
+                if (deleteCommand == null)
+                    deleteCommand = new RelayCommand(ExecuteDeleteCommand, CanExecuteDeleteCommand);
+                return deleteCommand;
+            }
+        }
+
+        public void ExecuteDeleteCommand()
+        {
+            Repositories.RExcursions.Remove(ExcursionList[(int)SelectedIndex]);
+            Repositories.RTicketSales.Remove(CurrentTicket);
+            ExcursionList = null;
+        }
+
+        public bool CanExecuteDeleteCommand()
+        {
+            return SelectedIndex >= 0;
         }
 
         RelayCommand changeCommand;
@@ -115,24 +212,31 @@ namespace MVVM_LightKit.ViewModel
             get
             {
                 if (changeCommand == null)
-                    changeCommand = new RelayCommand(ExecuteAddCommand, CanExecuteAddCommand);
+                    changeCommand = new RelayCommand(ExecuteChangeCommand, CanExecuteChangeCommand);
                 return changeCommand;
             }
         }
 
         public void ExecuteChangeCommand()
         {
-            Repositories.RExcursions.Add(new Excursion() { Name = Name, Price = Price, ExDate = ExDate, Type = Type, Duration = Duration, Description = Description });
-            //ExcursionList = null;
+            Name = CurrentExcursion.Name;
+            Description = CurrentExcursion.Description;
+            Duration = CurrentExcursion.Duration;
+            Price = CurrentExcursion.Price;
+            ExDate = CurrentExcursion.ExDate;
+            Type = CurrentExcursion.Type;
+            Description = CurrentExcursion.Description;
+
+            TicketAmount = CurrentTicket.Amount;
+            TicketPrice = CurrentTicket.Price;
+            TicketNotes = CurrentTicket.Notes;
+            ButtonAddFunction = "Cохранить";
         }
 
         public bool CanExecuteChangeCommand()
         {
             return SelectedIndex >= 0;
         }
-
-
-
 
 
         RelayCommand applicationExit;

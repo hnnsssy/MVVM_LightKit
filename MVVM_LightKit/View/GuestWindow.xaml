@@ -22,7 +22,8 @@
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
-                <RowDefinition Height="60"/>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="50"/>
                 <RowDefinition Height="150"/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
@@ -31,16 +32,17 @@
                 <ImageBrush ImageSource="../Images/background.jpg" Stretch="UniformToFill"/>
             </Grid.Background>
 
-            <TextBlock Text="ОКНО ВХОДА (ГОСТЬ)"
-                           FontWeight="Regular"
-                           FontFamily="helvetica"
-                           FontSize="28"
-                           Foreground="White"
-                           HorizontalAlignment="Center"
-                           />
+            <materialDesign:PackIcon Grid.Row="0" Kind="Close" Width="30" Height="30" HorizontalAlignment="Right" Foreground="White">
+                <intr:Interaction.Triggers>
+                    <intr:EventTrigger EventName="MouseDown">
+                        <intr:InvokeCommandAction Command="{Binding ApplicationExit}"/>
+                    </intr:EventTrigger>
+                </intr:Interaction.Triggers>
+            </materialDesign:PackIcon>
 
+            <TextBlock Grid.Row="1" Foreground="White" FontFamily="Segoe UI" Text="ГОСТЬ" FontSize="35" HorizontalAlignment="Center" FontWeight="Bold"/>
 
-            <StackPanel Grid.Row="1" VerticalAlignment="Center" Margin="0,0,0,0">
+            <StackPanel Grid.Row="2" VerticalAlignment="Center" Margin="0,0,0,0">
                 <TextBox materialDesign:HintAssist.Hint="Имя" 
                              materialDesign:HintAssist.Foreground="AliceBlue"
                              materialDesign:HintAssist.HintOpacity=".80"
@@ -58,9 +60,9 @@
                              Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Path = CurrentGuest.PhoneNumber}" FontSize="18" Foreground="AliceBlue" Width="250"/>
                 <TextBlock Margin="31,0,0,0" Text="{Binding Path=Message}" Foreground="Red" Opacity=".50"></TextBlock>
             </StackPanel>
-            <StackPanel Grid.Row="2">
+            <StackPanel Grid.Row="3">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Width="250" Height="40" Content="ВОЙТИ" Command="{Binding LoginCommand}" Margin="0,0,0,0"/>
+                    <Button Width="250" Height="40" Content="ВОЙТИ" Command="{Binding LoginCommand}" Margin="0,15,0,0"/>
                 </StackPanel>
             </StackPanel>
         </Grid>
