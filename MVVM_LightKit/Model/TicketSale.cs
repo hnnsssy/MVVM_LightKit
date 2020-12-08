@@ -24,7 +24,7 @@ namespace MVVM_LightKit.Model
         [NotMapped]
         private string notes;
 
-        public Excursion Excursion { get; set; }
+        public virtual Excursion Excursion { get; set; }
         public virtual ICollection<TicketSaleClient> TicketSaleClients { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;

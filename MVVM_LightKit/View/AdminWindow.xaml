@@ -7,7 +7,7 @@
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         xmlns:vm="clr-namespace:MVVM_LightKit.ViewModel" xmlns:intr="http://schemas.microsoft.com/expression/2010/interactivity"
         mc:Ignorable="d"
-        Height="380" Width="910"
+        Height="410" Width="980"
         AllowsTransparency="True"
         WindowStyle="None" ResizeMode="NoResize">
     <Window.DataContext>
@@ -34,54 +34,59 @@
                 </intr:EventTrigger>
             </intr:Interaction.Triggers>
         </materialDesign:PackIcon>
-        
-        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,0">
-            <DataGrid
+
+        <TabControl Grid.Row="1" Background="Transparent">
+            <TabItem Header="EXCURSION" FontFamily="Segoe UI">
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,0">
+                    <DataGrid
                 ItemsSource="{Binding ExcursionList}"
                 AutoGenerateColumns="False" Height="340"
                 CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" Background="AliceBlue" SelectionMode="Single" SelectionUnit="FullRow" SelectedIndex="{Binding SelectedIndex}">
-                <DataGrid.RowStyle>
-                    <Style TargetType="DataGridRow">
-                        <Style.Triggers>
-                            <Trigger Property="IsSelected"
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected"
                         Value="True">
-                                <Setter Property="BorderBrush"
-                        Value="PapayaWhip" />
-                                <Setter Property="BorderThickness"
+                                        <Setter Property="BorderBrush"
+                        Value="Gray" />
+                                        <Setter Property="BorderThickness"
                         Value="2" />
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </DataGrid.RowStyle>
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Name"
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID"
+                                    Width="50"
+                                    Binding="{Binding Path=Id}" />
+                            <DataGridTextColumn Header="Name"
                                     Width="100"
                                     Binding="{Binding Path=Name}" />
-                    <DataGridTextColumn Header="Duration"
+                            <DataGridTextColumn Header="Duration"
                                     Width="90"
                                     Binding="{Binding Path=Duration}" />
-                    <DataGridTextColumn Header="Price"
+                            <DataGridTextColumn Header="Price"
                                     Width="90"
                                     Binding="{Binding Path=Price}" />
-                    <DataGridTextColumn Header="Date"
-                                    Width="90"
+                            <DataGridTextColumn Header="Date"
+                                    Width="100"
                                     Binding="{Binding Path=ExDate}" />
-                    <DataGridTextColumn Header="Type"
-                                    Width="90"
+                            <DataGridTextColumn Header="Type"
+                                    Width="100"
                                     Binding="{Binding Path=Type}" />
-                    <DataGridTextColumn Header="Description"
+                            <DataGridTextColumn Header="Description"
                                     Width="150"
                                     Binding="{Binding Path=Description}" />
-                </DataGrid.Columns>
-            </DataGrid>
+                        </DataGrid.Columns>
+                    </DataGrid>
 
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition/>
-                    <ColumnDefinition/>
-                </Grid.ColumnDefinitions>
-                <StackPanel Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Center" Width="140">
-                    <TextBox
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Center" Width="140">
+                            <TextBox
                         materialDesign:HintAssist.Hint="Name"
                         FontSize="14"
                         Margin="10 20 0 0"
@@ -89,7 +94,7 @@
                         VerticalAlignment="Center" Text="{Binding Name, Mode=TwoWay}"
                         materialDesign:HintAssist.Foreground="Wheat"
                         materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
-                    <TextBox 
+                            <TextBox 
                         materialDesign:HintAssist.Hint="Duration"
                         FontSize="14"
                         Margin="10 0 0 0"
@@ -98,7 +103,7 @@
                         VerticalAlignment="Center"
                         materialDesign:HintAssist.Foreground="Wheat"
                         materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
-                    <TextBox
+                            <TextBox
                         materialDesign:HintAssist.Hint="Price"
                         FontSize="14"
                         Margin="10 0 0 0"
@@ -107,7 +112,7 @@
                         VerticalAlignment="Center"
                         materialDesign:HintAssist.Foreground="Wheat"
                         materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
-                    <TextBox
+                            <TextBox
                         materialDesign:HintAssist.Hint="Ticket Amount"
                         FontSize="14"
                         Margin="10 0 0 0"
@@ -116,7 +121,7 @@
                         VerticalAlignment="Center"
                         materialDesign:HintAssist.Foreground="Wheat"
                         materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
-                    <TextBox
+                            <TextBox
                         materialDesign:HintAssist.Hint="Ticket Price"
                         FontSize="14"
                         Margin="10 0 0 0"
@@ -126,11 +131,11 @@
                         materialDesign:HintAssist.Foreground="Wheat"
                         materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
 
-                    <Button Width="125" Height="40" Margin="10 10 0 0" Content="{Binding ButtonAddFunction}" Command="{Binding AddCommand}" HorizontalAlignment="Center"/>
-                </StackPanel>
+                            <Button Width="125" Height="40" Margin="10 10 0 0" Content="{Binding ButtonAddFunction}" Command="{Binding AddCommand}" HorizontalAlignment="Center"/>
+                        </StackPanel>
 
-                <StackPanel Width="140" Grid.Column="1">
-                    <TextBox
+                        <StackPanel Width="140" Grid.Column="1">
+                            <TextBox
                     materialDesign:HintAssist.Hint="Date"
                     FontSize="14"
                     Margin="10 20 0 0"
@@ -139,16 +144,29 @@
                     VerticalAlignment="Center"
                     materialDesign:HintAssist.Foreground="Wheat"
                     materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
-                    <TextBox
-                    materialDesign:HintAssist.Hint="Type"
-                    FontSize="14"
-                    Margin="10 0 0 0"
-                    Text="{Binding Type, Mode=TwoWay}"
-                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    VerticalAlignment="Center"
-                    materialDesign:HintAssist.Foreground="Wheat"
-                    materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
-                    <TextBox
+                            <ComboBox 
+                          materialDesign:HintAssist.Hint="Type"
+                          materialDesign:HintAssist.HintOpacity=".68"
+                          materialDesign:HintAssist.Foreground="Wheat"
+                          materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="16"  Margin="10,13,0,0"
+                          Text="{Binding Type, Mode=TwoWay}">
+                                <ComboBoxItem Foreground="Black">
+                                    Городская
+                                </ComboBoxItem >
+                                <ComboBoxItem Foreground="Black">
+                                    Музейная
+                                </ComboBoxItem>
+                                <ComboBoxItem Foreground="Black">
+                                    Обзорная
+                                </ComboBoxItem>
+                                <ComboBoxItem Foreground="Black">
+                                    Транспортная
+                                </ComboBoxItem>
+                                <ComboBoxItem Foreground="Black">
+                                    Историческая
+                                </ComboBoxItem>
+                            </ComboBox>
+                            <TextBox
                     materialDesign:HintAssist.Hint="Description"
                     FontSize="14"
                     Margin="10 0 0 0"
@@ -158,7 +176,7 @@
                     materialDesign:HintAssist.Foreground="Wheat"
                     materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
 
-                    <TextBox
+                            <TextBox
                         materialDesign:HintAssist.Hint="Ticket Notes"
                         FontSize="14"
                         Margin="10 0 0 0"
@@ -168,12 +186,311 @@
                         materialDesign:HintAssist.Foreground="Wheat"
                         materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
 
-                    <Button Width="125" Height="40" Margin="10 56 0 0" Content="Изменить" Command="{Binding ChangeCommand}" HorizontalAlignment="Center"/>
-                </StackPanel>
+                            <Button Width="125" Height="40" Margin="10 56 0 0" Content="Изменить" Command="{Binding ChangeCommand}" HorizontalAlignment="Center"/>
+                        </StackPanel>
 
-                <Button Height="40" Grid.ColumnSpan="2" Content="Удалить" Command="{Binding DeleteCommand}" Margin="13 300 3 0" />
-            </Grid>
-        </StackPanel>
+                        <Button Height="40" Grid.ColumnSpan="2" Content="Удалить" Command="{Binding DeleteCommand}" Margin="13 300 3 0" />
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="CLIENTS" FontFamily="Segoe UI">
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,0">
+                    <DataGrid
+                ItemsSource="{Binding ClientsList}"
+                AutoGenerateColumns="False" Height="340"
+                CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" Background="AliceBlue" SelectionMode="Single" SelectionUnit="FullRow" SelectedIndex="{Binding SelectedIndexClient}">
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected"
+                        Value="True">
+                                        <Setter Property="BorderBrush"
+                        Value="Gray" />
+                                        <Setter Property="BorderThickness"
+                        Value="2" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID"
+                                    Width="50"
+                                    Binding="{Binding Path=Id}" />
+                            <DataGridTextColumn Header="SName"
+                                    Width="80"
+                                    Binding="{Binding Path=SName}" />
+                            <DataGridTextColumn Header="PName"
+                                    Width="80"
+                                    Binding="{Binding Path=PName}" />
+                            <DataGridTextColumn Header="PhoneNumber"
+                                    Width="120"
+                                    Binding="{Binding Path=PhoneNumber}" />
+                            <DataGridTextColumn Header="Birthday"
+                                    Width="90"
+                                    Binding="{Binding Path=Birthday}" />
+                            <DataGridTextColumn Header="Email"
+                                    Width="90"
+                                    Binding="{Binding Path=Email}" />
+                            <DataGridTextColumn Header="Login"
+                                    Width="90"
+                                    Binding="{Binding Path=Login}" />
+                            <DataGridTextColumn Header="Password"
+                                    Width="90"
+                                    Binding="{Binding Path=Password}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Center" Width="140">
+                            <TextBox
+                        materialDesign:HintAssist.Hint="SName"
+                        FontSize="14"
+                        Margin="10 20 0 0"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        VerticalAlignment="Center" Text="{Binding SName, Mode=TwoWay}"
+                        materialDesign:HintAssist.Foreground="Wheat"
+                        materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
+                            <TextBox 
+                        materialDesign:HintAssist.Hint="PName"
+                        FontSize="14"
+                        Margin="10 0 0 0"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        Text="{Binding PName, Mode=TwoWay}"
+                        VerticalAlignment="Center"
+                        materialDesign:HintAssist.Foreground="Wheat"
+                        materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
+                            <TextBox
+                        materialDesign:HintAssist.Hint="PhoneNumber"
+                        FontSize="14"
+                        Margin="10 0 0 0"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        Text="{Binding PhoneNumber, Mode=TwoWay}"
+                        VerticalAlignment="Center"
+                        materialDesign:HintAssist.Foreground="Wheat"
+                        materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
+                            <TextBox
+                        materialDesign:HintAssist.Hint="Email"
+                        FontSize="14"
+                        Margin="10 0 0 0"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        Text="{Binding Email, Mode=TwoWay}"
+                        VerticalAlignment="Center"
+                        materialDesign:HintAssist.Foreground="Wheat"
+                        materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
+
+                            <Button Width="125" Height="40" Margin="10 10 0 0" Content="{Binding ButtonClientAddFunction}" Command="{Binding AddClientCommand}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Width="140" Grid.Column="1">
+                            <TextBox
+                    materialDesign:HintAssist.Hint="Login"
+                    FontSize="14"
+                    Margin="10 20 0 0"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    Text="{Binding Login, Mode=TwoWay}"
+                    VerticalAlignment="Center"
+                    materialDesign:HintAssist.Foreground="Wheat"
+                    materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
+                            <TextBox
+                    materialDesign:HintAssist.Hint="Password"
+                    FontSize="14"
+                    Margin="10 0 0 0"
+                    Text="{Binding Password, Mode=TwoWay}"
+                    Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                    VerticalAlignment="Center"
+                    materialDesign:HintAssist.Foreground="Wheat"
+                    materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
+                            <TextBox
+                        materialDesign:HintAssist.Hint="Birthday"
+                        FontSize="14"
+                        Margin="10 0 0 0"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        Text="{Binding Birthday, Mode=TwoWay}"
+                        VerticalAlignment="Center"
+                        materialDesign:HintAssist.Foreground="Wheat"
+                        materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
+
+                            <Button Width="125" Height="40" Margin="10 56 0 0" Content="Изменить" Command="{Binding ChangeClientCommand}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+
+                        <Button Height="40" Grid.ColumnSpan="2" Content="Удалить" Command="{Binding DeleteClientCommand}" Margin="13 210 3 0" />
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="CLIENTS RESERVATIONS" FontFamily="Segoe UI">
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,0">
+                    <DataGrid
+                ItemsSource="{Binding TicketSaleClients}"
+                AutoGenerateColumns="False" Height="340"
+                CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" Background="AliceBlue" SelectionMode="Single" SelectionUnit="FullRow" SelectedIndex="{Binding SelectedIndexTicketSaleClients}">
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected"
+                        Value="True">
+                                        <Setter Property="BorderBrush"
+                        Value="Gray" />
+                                        <Setter Property="BorderThickness"
+                        Value="2" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Client"
+                                    Width="225"
+                                    Binding="{Binding Path=Client}" />
+                            <DataGridTextColumn Header="Excursion"
+                                    Width="225"
+                                    Binding="{Binding Path=TicketSale.Excursion.Name}" />
+                            <DataGridTextColumn Header="Ticket Amount"
+                                    Width="225"
+                                    Binding="{Binding Path=TicketAmount}" />
+                            
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Center" Width="140">
+                            <ComboBox 
+                          materialDesign:HintAssist.Hint="Клиенты"
+                          materialDesign:HintAssist.HintOpacity=".68"
+                          materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="16"  Margin="10,20,0,0"
+                          ItemsSource="{Binding Clients}" SelectedItem="{Binding CurrentClientReservation, Mode=TwoWay}">
+                                <ComboBox.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ComboBoxItem}">
+                                        <Setter Property="Foreground" Value="Black" />
+                                    </Style>
+                                </ComboBox.ItemContainerStyle>
+                            </ComboBox>
+
+                                <TextBox
+                        materialDesign:HintAssist.Hint="Ticket Amount"
+                        FontSize="14"
+                        Margin="10 0 0 0"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        VerticalAlignment="Center" Text="{Binding TicketSaleClientsTicketAmount, Mode=TwoWay}"
+                        materialDesign:HintAssist.Foreground="Wheat"
+                        materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
+
+                            <Button Width="125" Height="40" Margin="10 10 0 0" Content="{Binding ButtonClientAddFunction}" Command="{Binding AddTicketSaleClientCommand}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Width="140" Grid.Column="1">
+                            <ComboBox 
+                          materialDesign:HintAssist.Hint="Экскурсии"
+                          materialDesign:HintAssist.HintOpacity=".68"
+                          materialDesign:HintAssist.Foreground="Wheat"
+                          materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="16"  Margin="10,20,0,0"
+                          ItemsSource="{Binding ExcursionList}" SelectedItem="{Binding CurrentExcursionReservation, Mode=TwoWay}">
+                                <ComboBox.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ComboBoxItem}">
+                                        <Setter Property="Foreground" Value="Black" />
+                                    </Style>
+                                </ComboBox.ItemContainerStyle>
+                            </ComboBox>
+
+                            <Button Width="125" Height="40" Margin="10 56 0 0" Content="Изменить" Command="{Binding ChangeClientReservationCommand}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+
+                        <Button Height="40" Grid.ColumnSpan="2" Content="Удалить" Command="{Binding DeleteTicketSaleClientCommand}" Margin="13 10 3 0" />
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+            <TabItem Header="GUESTS RESERVATIONS" FontFamily="Segoe UI">
+                <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="0,0,0,0">
+                    <DataGrid
+                ItemsSource="{Binding TicketSaleGuests}"
+                AutoGenerateColumns="False" Height="340"
+                CanUserAddRows="False" CanUserDeleteRows="False" IsReadOnly="True" Background="AliceBlue" SelectionMode="Single" SelectionUnit="FullRow" SelectedIndex="{Binding SelectedIndexTicketSaleGuests}">
+                        <DataGrid.RowStyle>
+                            <Style TargetType="DataGridRow">
+                                <Style.Triggers>
+                                    <Trigger Property="IsSelected"
+                        Value="True">
+                                        <Setter Property="BorderBrush"
+                        Value="Gray" />
+                                        <Setter Property="BorderThickness"
+                        Value="2" />
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </DataGrid.RowStyle>
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Client"
+                                    Width="225"
+                                    Binding="{Binding Path=Guest}" />
+                            <DataGridTextColumn Header="Excursion"
+                                    Width="225"
+                                    Binding="{Binding Path=TicketSale.Excursion.Name}" />
+                            <DataGridTextColumn Header="Ticket Amount"
+                                    Width="225"
+                                    Binding="{Binding Path=TicketAmount}" />
+
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition/>
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Grid.Column="0" Orientation="Vertical" HorizontalAlignment="Center" Width="140">
+                            <ComboBox 
+                          materialDesign:HintAssist.Hint="Гости"
+                          materialDesign:HintAssist.HintOpacity=".68"
+                          materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="16"  Margin="10,20,0,0"
+                          ItemsSource="{Binding Guests}" SelectedItem="{Binding CurrentGuestReservation, Mode=TwoWay}">
+                                <ComboBox.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ComboBoxItem}">
+                                        <Setter Property="Foreground" Value="Black" />
+                                    </Style>
+                                </ComboBox.ItemContainerStyle>
+                            </ComboBox>
+
+                            <TextBox
+                        materialDesign:HintAssist.Hint="Ticket Amount"
+                        FontSize="14"
+                        Margin="10 0 0 0"
+                        Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+                        VerticalAlignment="Center" Text="{Binding TicketSaleGuestsTicketAmount, Mode=TwoWay}"
+                        materialDesign:HintAssist.Foreground="Wheat"
+                        materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
+
+                            <Button Width="125" Height="40" Margin="10 10 0 0" Content="{Binding ButtonClientAddFunction}" Command="{Binding AddTicketSaleGuestCommand}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+
+                        <StackPanel Width="140" Grid.Column="1">
+                            <ComboBox 
+                          materialDesign:HintAssist.Hint="Экскурсии"
+                          materialDesign:HintAssist.HintOpacity=".68"
+                          materialDesign:HintAssist.Foreground="Wheat"
+                          materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="16"  Margin="10,20,0,0"
+                          ItemsSource="{Binding ExcursionList}" SelectedItem="{Binding CurrentExcursionReservationGuest, Mode=TwoWay}">
+                                <ComboBox.ItemContainerStyle>
+                                    <Style TargetType="{x:Type ComboBoxItem}">
+                                        <Setter Property="Foreground" Value="Black" />
+                                    </Style>
+                                </ComboBox.ItemContainerStyle>
+                            </ComboBox>
+
+                            <Button Width="125" Height="40" Margin="10 56 0 0" Content="Изменить" Command="{Binding ChangeGuestReservationCommand}" HorizontalAlignment="Center"/>
+                        </StackPanel>
+
+                        <Button Height="40" Grid.ColumnSpan="2" Content="Удалить" Command="{Binding DeleteTicketSaleGuestCommand}" Margin="13 10 3 0" />
+                    </Grid>
+                </StackPanel>
+            </TabItem>
+        </TabControl>
+        
 
     </Grid>
 </Window>

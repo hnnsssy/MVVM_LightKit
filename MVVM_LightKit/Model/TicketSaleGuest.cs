@@ -15,7 +15,7 @@ namespace MVVM_LightKit.Model
         [NotMapped]
         private int ticketAmount;
         public Guest Guest { get; set; }
-        public TicketSale TicketSale { get; set; }
+        public virtual TicketSale TicketSale { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
         private void OnPropertyChanged(string propertyName)

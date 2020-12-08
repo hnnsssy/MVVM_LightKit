@@ -25,6 +25,66 @@ namespace MVVM_LightKit.ViewModel
         }
 
 
+        ObservableCollection<Client> clientsList;
+        public ObservableCollection<Client> ClientsList
+        {
+            get
+            {
+                if (clientsList == null)
+                    clientsList = new ObservableCollection<Client>(Repositories.RClients.GetAll());
+                return clientsList;
+            }
+            set { clientsList = value; RaisePropertyChanged("ClientsList"); }
+        }
+
+        ObservableCollection<TicketSaleClient> ticketSaleClients;
+        public ObservableCollection<TicketSaleClient> TicketSaleClients
+        {
+            get
+            {
+                if (ticketSaleClients == null)
+                    ticketSaleClients = new ObservableCollection<TicketSaleClient>(Repositories.RTicketSaleClients.GetAll());
+                return ticketSaleClients;
+            }
+            set { ticketSaleClients = value; RaisePropertyChanged("TicketSaleClients"); }
+        }
+
+        ObservableCollection<TicketSaleGuest> ticketSaleGuests;
+        public ObservableCollection<TicketSaleGuest> TicketSaleGuests
+        {
+            get
+            {
+                if (ticketSaleGuests == null)
+                    ticketSaleGuests = new ObservableCollection<TicketSaleGuest>(Repositories.RTicketSaleGuests.GetAll());
+                return ticketSaleGuests;
+            }
+            set { ticketSaleGuests = value; RaisePropertyChanged("TicketSaleGuests"); }
+        }
+
+        ObservableCollection<Client> clients;
+        public ObservableCollection<Client> Clients
+        {
+            get
+            {
+                if (clients == null)
+                    clients = new ObservableCollection<Client>(Repositories.RClients.GetAll());
+                return clients;
+            }
+            set { clients = value; RaisePropertyChanged("Clients"); }
+        }
+
+        ObservableCollection<Guest> guests;
+        public ObservableCollection<Guest> Guests
+        {
+            get
+            {
+                if (guests == null)
+                    guests = new ObservableCollection<Guest>(Repositories.RGuests.GetAll());
+                return guests;
+            }
+            set { guests = value; RaisePropertyChanged("Guest"); }
+        }
+
 
         private int? selectedIndex;
         public int? SelectedIndex
@@ -254,5 +314,478 @@ namespace MVVM_LightKit.ViewModel
         {
             System.Windows.Application.Current.Shutdown();
         }
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private Client currentClient;
+        public Client CurrentClient
+        {
+            get { return currentClient; }
+            set { currentClient = value; RaisePropertyChanged("CurrentClient"); }
+        }
+
+        private int? selectedIndexClient;
+        public int? SelectedIndexClient
+        {
+            get { return selectedIndexClient; }
+            set
+            {
+                selectedIndexClient = value;
+                CurrentClient = Repositories.RClients.FindById(ClientsList[(int)value].Id);
+                RaisePropertyChanged("SelectedIndexClient");
+            }
+        }
+
+        private string sname;
+        public string SName
+        {
+            get { return sname; }
+            set { sname = value; RaisePropertyChanged("SName"); }
+        }
+
+        private string pname;
+        public string PName
+        {
+            get { return pname; }
+            set { pname = value; RaisePropertyChanged("PName"); }
+        }
+
+        private string phoneNumber;
+        public string PhoneNumber
+        {
+            get { return phoneNumber; }
+            set { phoneNumber = value; RaisePropertyChanged("PhoneNumber"); }
+        }
+
+        private string birthday;
+        public string Birthday
+        {
+            get { return birthday; }
+            set { birthday = value; RaisePropertyChanged("Birthday"); }
+        }
+
+        private string email;
+        public string Email
+        {
+            get { return email; }
+            set { email = value; RaisePropertyChanged("Email"); }
+        }
+
+        private string login;
+        public string Login
+        {
+            get { return login; }
+            set { login = value; RaisePropertyChanged("Login"); }
+        }
+
+        private string password;
+        public string Password
+        {
+            get { return password; }
+            set { password = value; RaisePropertyChanged("Password"); }
+        }
+
+        RelayCommand changeClientCommand;
+        public RelayCommand ChangeClientCommand
+        {
+            get
+            {
+                if (changeClientCommand == null)
+                    changeClientCommand = new RelayCommand(ExecuteChangeClientCommand, CanExecuteChangeClientCommand);
+                return changeClientCommand;
+            }
+        }
+
+        public void ExecuteChangeClientCommand()
+        {
+            SName = CurrentClient.SName;
+            PName = CurrentClient.PName;
+            PhoneNumber = CurrentClient.PhoneNumber;
+            Birthday = CurrentClient.Birthday;
+            Email = CurrentClient.Email;
+            Login = CurrentClient.Login;
+            Password = CurrentClient.Password;
+
+            ButtonClientAddFunction = "Cохранить";
+        }
+
+        public bool CanExecuteChangeClientCommand()
+        {
+            return SelectedIndexClient >= 0;
+        }
+
+
+        private string buttonClientAddFunction = "Добавить";
+        public string ButtonClientAddFunction
+        {
+            get { return buttonClientAddFunction; }
+            set { buttonClientAddFunction = value; RaisePropertyChanged("ButtonClientAddFunction"); }
+        }
+
+
+
+        RelayCommand addClientCommand;
+        public RelayCommand AddClientCommand
+        {
+            get
+            {
+                if (addClientCommand == null)
+                    addClientCommand = new RelayCommand(ExecuteAddClientCommandd, CanExecuteAddClientCommand);
+                return addClientCommand;
+            }
+        }
+
+        public void ExecuteAddClientCommandd()
+        {
+            if (ButtonClientAddFunction == "Добавить")
+            {
+                Client exc = new Client() { SName = SName, PName = PName, PhoneNumber = PhoneNumber, Birthday = Birthday, Email = Email, Login = Login, Password = Password };
+                Repositories.RClients.Add(exc);
+                ClearClientFields();
+            }
+            else
+            {
+                CurrentClient.SName = SName;
+                CurrentClient.PName = PName;
+                CurrentClient.PhoneNumber = PhoneNumber;
+                CurrentClient.Birthday = Birthday;
+                CurrentClient.Email = Email;
+                CurrentClient.Login = Login;
+                CurrentClient.Password = Password;
+                Repositories.RClients.Update(CurrentClient);
+
+                ClearClientFields();
+                ButtonClientAddFunction = "Добавить";
+            }
+        }
+
+        public bool CanExecuteAddClientCommand()
+        {
+            return !string.IsNullOrEmpty(SName) 
+                && !string.IsNullOrEmpty(PName) 
+                && !string.IsNullOrEmpty(PhoneNumber)
+                && !string.IsNullOrEmpty(Birthday) 
+                && !string.IsNullOrEmpty(Email) 
+                && !string.IsNullOrEmpty(Login) 
+                && !string.IsNullOrEmpty(Password);
+        }
+
+        RelayCommand deleteClientCommand;
+        public RelayCommand DeleteClientCommand
+        {
+            get
+            {
+                if (deleteClientCommand == null)
+                    deleteClientCommand = new RelayCommand(ExecuteDeleteClientCommand, CanExecuteDeleteClientCommand);
+                return deleteClientCommand;
+            }
+        }
+
+        public void ExecuteDeleteClientCommand()
+        {
+            Repositories.RClients.Remove(ClientsList[(int)SelectedIndexClient]);
+            ClientsList = null;
+        }
+
+        public bool CanExecuteDeleteClientCommand()
+        {
+            return SelectedIndexClient >= 0;
+        }
+
+
+        public void ClearClientFields()
+        {
+            ClientsList = null;
+            SName = "";
+            PName = "";
+            PhoneNumber = "";
+            Birthday = "";
+            Email = "";
+            Login = "";
+            Password = "";
+        }
+
+
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+        private Client currentClientReservation; //ReservationExcursionName
+        public Client CurrentClientReservation
+        {
+            get { return currentClientReservation; }
+            set { currentClientReservation = value; RaisePropertyChanged("CurrentClientReservation"); }
+        }
+
+        private Excursion currentExcursionReservation;
+        public Excursion CurrentExcursionReservation
+        {
+            get { return currentExcursionReservation; }
+            set { currentExcursionReservation = value; RaisePropertyChanged("CurrentExcursionReservation"); }
+        }
+
+        private TicketSaleClient currentTicketSaleClient;
+        public TicketSaleClient CurrentTicketSaleClient
+        {
+            get { return currentTicketSaleClient; }
+            set { currentTicketSaleClient = value; RaisePropertyChanged("CurrentTicketSaleClient"); }
+        }
+
+        private int? selectedIndexTicketSaleClients;
+        public int? SelectedIndexTicketSaleClients
+        {
+            get { return selectedIndexTicketSaleClients; }
+            set
+            {
+                selectedIndexTicketSaleClients = value;
+                CurrentTicketSaleClient = TicketSaleClients[(int)value];
+                RaisePropertyChanged("SelectedIndexTicketSaleClients");
+            }
+        }
+
+        private int? ticketSaleClientsTicketAmount;
+        public int? TicketSaleClientsTicketAmount
+        {
+            get { return ticketSaleClientsTicketAmount; }
+            set
+            {
+                ticketSaleClientsTicketAmount = value;
+                RaisePropertyChanged("TicketSaleClientsTicketAmount");
+            }
+        }
+
+        RelayCommand changeClientReservationCommand;
+        public RelayCommand ChangeClientReservationCommand
+        {
+            get
+            {
+                if (changeClientReservationCommand == null)
+                    changeClientReservationCommand = new RelayCommand(ExecuteChangeClientReservationCommand, CanExecuteChangeClientReservationCommand);
+                return changeClientReservationCommand;
+            }
+        }
+
+        public void ExecuteChangeClientReservationCommand()
+        {
+            CurrentClientReservation = TicketSaleClients[(int)SelectedIndexTicketSaleClients].Client;
+            CurrentExcursionReservation = TicketSaleClients[(int)SelectedIndexTicketSaleClients].TicketSale.Excursion;
+            TicketSaleClientsTicketAmount = TicketSaleClients[(int)SelectedIndexTicketSaleClients].TicketAmount;
+            ButtonClientAddFunction = "Cохранить";
+        }
+
+        public bool CanExecuteChangeClientReservationCommand()
+        {
+            return SelectedIndexTicketSaleClients >= 0;
+        }
+
+
+        RelayCommand addTicketSaleClientCommand;
+        public RelayCommand AddTicketSaleClientCommand
+        {
+            get
+            {
+                if (addTicketSaleClientCommand == null)
+                    addTicketSaleClientCommand = new RelayCommand(ExecuteAddTicketSaleClientCommand, CanExecuteAddTicketSaleClientCommand);
+                return addTicketSaleClientCommand;
+            }
+        }
+
+        public void ExecuteAddTicketSaleClientCommand()
+        {
+            if (ButtonClientAddFunction == "Добавить")
+            {
+                /*Client exc = new Client() { SName = SName, PName = PName, PhoneNumber = PhoneNumber, Birthday = Birthday, Email = Email, Login = Login, Password = Password };*/
+                Repositories.RTicketSaleClients.Add(new TicketSaleClient() { Client = CurrentClientReservation, TicketSale = Repositories.RTicketSales.FindAll(x=>x.Excursion.Id == CurrentExcursionReservation.Id).FirstOrDefault(), TicketAmount = (int)TicketSaleClientsTicketAmount });
+                ClearTicketSaleClientFields();
+            }
+            else
+            {
+                CurrentTicketSaleClient.Client = CurrentClientReservation;
+                CurrentTicketSaleClient.TicketSale = Repositories.RTicketSales.FindAll(x => x.Excursion.Id == CurrentExcursionReservation.Id).FirstOrDefault();
+                CurrentTicketSaleClient.TicketAmount = (int)TicketSaleClientsTicketAmount;
+                Repositories.RTicketSaleClients.Update(CurrentTicketSaleClient);
+
+                ClearTicketSaleClientFields();
+                ButtonClientAddFunction = "Добавить";
+            }
+        }
+
+        public bool CanExecuteAddTicketSaleClientCommand()
+        {
+            return TicketSaleClientsTicketAmount != null;
+        }
+
+        RelayCommand deleteTicketSaleClientCommand;
+        public RelayCommand DeleteTicketSaleClientCommand
+        {
+            get
+            {
+                if (deleteTicketSaleClientCommand == null)
+                    deleteTicketSaleClientCommand = new RelayCommand(ExecuteDeleteTicketSaleClientCommand, CanExecuteDeleteTicketSaleClientCommand);
+                return deleteTicketSaleClientCommand;
+            }
+        }
+
+        public void ExecuteDeleteTicketSaleClientCommand()
+        {
+            Repositories.RTicketSaleClients.Remove(TicketSaleClients[(int)SelectedIndexTicketSaleClients]);
+            TicketSaleClients = null;
+        }
+
+        public bool CanExecuteDeleteTicketSaleClientCommand()
+        {
+            return SelectedIndexTicketSaleClients >= 0;
+        }
+
+        public void ClearTicketSaleClientFields()
+        {
+            TicketSaleClients = null;
+            CurrentClientReservation = null;
+            CurrentExcursionReservation = null;
+            TicketSaleClientsTicketAmount = null;
+        }
+        ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+        private Guest currentGuestReservation; //ReservationExcursionName
+        public Guest CurrentGuestReservation
+        {
+            get { return currentGuestReservation; }
+            set { currentGuestReservation = value; RaisePropertyChanged("CurrentGuestReservation"); }
+        }
+
+        private Excursion currentExcursionReservationGuest;
+        public Excursion CurrentExcursionReservationGuest
+        {
+            get { return currentExcursionReservationGuest; }
+            set { currentExcursionReservationGuest = value; RaisePropertyChanged("CurrentExcursionReservationGuest"); }
+        }
+
+        private TicketSaleGuest currentTicketSaleGuest;
+        public TicketSaleGuest CurrentTicketSaleGuest
+        {
+            get { return currentTicketSaleGuest; }
+            set { currentTicketSaleGuest = value; RaisePropertyChanged("CurrentTicketSaleGuest"); }
+        }
+
+        private int? selectedIndexTicketSaleGuests;
+        public int? SelectedIndexTicketSaleGuests
+        {
+            get { return selectedIndexTicketSaleGuests; }
+            set
+            {
+                selectedIndexTicketSaleGuests = value;
+                CurrentTicketSaleGuest = TicketSaleGuests[(int)value];
+                RaisePropertyChanged("SelectedIndexTicketSaleGuests");
+            }
+        }
+
+        private int? ticketSaleGuestsTicketAmount;
+        public int? TicketSaleGuestsTicketAmount
+        {
+            get { return ticketSaleGuestsTicketAmount; }
+            set
+            {
+                ticketSaleGuestsTicketAmount = value;
+                RaisePropertyChanged("TicketSaleGuestsTicketAmount");
+            }
+        }
+
+        RelayCommand changeGuestReservationCommand;
+        public RelayCommand ChangeGuestReservationCommand
+        {
+            get
+            {
+                if (changeGuestReservationCommand == null)
+                    changeGuestReservationCommand = new RelayCommand(ExecuteChangeGuestReservationCommand, CanExecuteChangeGuestReservationCommand);
+                return changeGuestReservationCommand;
+            }
+        }
+
+        public void ExecuteChangeGuestReservationCommand()
+        {
+            CurrentGuestReservation = TicketSaleGuests[(int)SelectedIndexTicketSaleGuests].Guest;
+            CurrentExcursionReservationGuest = TicketSaleGuests[(int)SelectedIndexTicketSaleGuests].TicketSale.Excursion;
+            TicketSaleGuestsTicketAmount = TicketSaleGuests[(int)SelectedIndexTicketSaleGuests].TicketAmount;
+            ButtonClientAddFunction = "Cохранить";
+        }
+
+        public bool CanExecuteChangeGuestReservationCommand()
+        {
+            return SelectedIndexTicketSaleGuests >= 0;
+        }
+
+
+        RelayCommand addTicketSaleGuestCommand;
+        public RelayCommand AddTicketSaleGuestCommand
+        {
+            get
+            {
+                if (addTicketSaleGuestCommand == null)
+                    addTicketSaleGuestCommand = new RelayCommand(ExecuteAddTicketSaleGuestCommand, CanExecuteAddTicketSaleGuestCommand);
+                return addTicketSaleGuestCommand;
+            }
+        }
+
+        public void ExecuteAddTicketSaleGuestCommand()
+        {
+            if (ButtonClientAddFunction == "Добавить")
+            {
+                /*Client exc = new Client() { SName = SName, PName = PName, PhoneNumber = PhoneNumber, Birthday = Birthday, Email = Email, Login = Login, Password = Password };*/
+                Repositories.RTicketSaleGuests.Add(new TicketSaleGuest() { 
+                    Guest = CurrentGuestReservation, 
+                    TicketSale = Repositories.RTicketSales.FindAll(x => x.Excursion.Id == CurrentExcursionReservationGuest.Id).FirstOrDefault(), 
+                    TicketAmount = (int)TicketSaleGuestsTicketAmount });
+                ClearTicketSaleGuestFields();
+            }
+            else
+            {
+                CurrentTicketSaleGuest.Guest = CurrentGuestReservation;
+                CurrentTicketSaleGuest.TicketSale = Repositories.RTicketSales.FindAll(x => x.Excursion.Id == CurrentExcursionReservationGuest.Id).FirstOrDefault();
+                CurrentTicketSaleGuest.TicketAmount = (int)TicketSaleGuestsTicketAmount;
+                Repositories.RTicketSaleGuests.Update(CurrentTicketSaleGuest);
+
+                ClearTicketSaleGuestFields();
+                ButtonClientAddFunction = "Добавить";
+            }
+        }
+
+        public bool CanExecuteAddTicketSaleGuestCommand()
+        {
+            return TicketSaleGuestsTicketAmount != null;
+        }
+
+        RelayCommand deleteTicketSaleGuestCommand;
+        public RelayCommand DeleteTicketSaleGuestCommand
+        {
+            get
+            {
+                if (deleteTicketSaleGuestCommand == null)
+                    deleteTicketSaleGuestCommand = new RelayCommand(ExecuteDeleteGuestSaleClientCommand, CanExecuteDeleteGuestSaleClientCommand);
+                return deleteTicketSaleGuestCommand;
+            }
+        }
+
+        public void ExecuteDeleteGuestSaleClientCommand()
+        {
+            Repositories.RTicketSaleGuests.Remove(TicketSaleGuests[(int)SelectedIndexTicketSaleGuests]);
+            TicketSaleClients = null;
+        }
+
+        public bool CanExecuteDeleteGuestSaleClientCommand()
+        {
+            return SelectedIndexTicketSaleClients >= 0;
+        }
+
+        public void ClearTicketSaleGuestFields()
+        {
+            TicketSaleGuests = null;
+            CurrentGuestReservation = null;
+            CurrentExcursionReservationGuest = null;
+            TicketSaleGuestsTicketAmount = null;
+        }
     }
 }
+

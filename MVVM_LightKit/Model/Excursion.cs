@@ -44,5 +44,10 @@ namespace MVVM_LightKit.Model
             if (PropertyChanged != null)
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
         }
+
+        public override string ToString()
+        {
+            return Name;
+        }
     }
 }

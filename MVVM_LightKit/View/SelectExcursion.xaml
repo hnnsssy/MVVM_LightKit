@@ -52,13 +52,16 @@
                         Городская
                     </ComboBoxItem >
                     <ComboBoxItem Foreground="Black">
-                        iOS
+                        Музейная
                     </ComboBoxItem>
                     <ComboBoxItem Foreground="Black">
-                        Linux
+                        Обзорная
                     </ComboBoxItem>
                     <ComboBoxItem Foreground="Black">
-                        Windows
+                        Транспортная
+                    </ComboBoxItem>
+                    <ComboBoxItem Foreground="Black">
+                        Историческая
                     </ComboBoxItem>
                 </ComboBox>
 
@@ -136,7 +139,7 @@
                             <Trigger Property="IsSelected"
                         Value="True">
                                 <Setter Property="BorderBrush"
-                        Value="PapayaWhip" />
+                        Value="Gray" />
                                 <Setter Property="BorderThickness"
                         Value="2" />
                             </Trigger>
