@@ -771,12 +771,12 @@ namespace MVVM_LightKit.ViewModel
         public void ExecuteDeleteGuestSaleClientCommand()
         {
             Repositories.RTicketSaleGuests.Remove(TicketSaleGuests[(int)SelectedIndexTicketSaleGuests]);
-            TicketSaleClients = null;
+            TicketSaleGuests = null;
         }
 
         public bool CanExecuteDeleteGuestSaleClientCommand()
         {
-            return SelectedIndexTicketSaleClients >= 0;
+            return SelectedIndexTicketSaleGuests >= 0;
         }
 
         public void ClearTicketSaleGuestFields()

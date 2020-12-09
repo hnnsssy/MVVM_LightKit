@@ -5,11 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MVVM_LightKit.View"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-        xmlns:vm="clr-namespace:MVVM_LightKit.ViewModel" xmlns:intr="http://schemas.microsoft.com/expression/2010/interactivity"
+        xmlns:vm="clr-namespace:MVVM_LightKit.ViewModel" xmlns:intr="http://schemas.microsoft.com/expression/2010/interactivity" xmlns:validationformats="clr-namespace:MVVM_LightKit.ValidationFormats"
         mc:Ignorable="d"
         Height="410" Width="980"
         AllowsTransparency="True"
-        WindowStyle="None" ResizeMode="NoResize">
+        WindowStyle="None" ResizeMode="NoResize" MouseDown="Window_MouseDown">
     <Window.DataContext>
         <vm:AdminWindowViewModel></vm:AdminWindowViewModel>
     </Window.DataContext>
@@ -91,7 +91,7 @@
                         FontSize="14"
                         Margin="10 20 0 0"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        VerticalAlignment="Center" Text="{Binding Name, Mode=TwoWay}"
+                        VerticalAlignment="Center" Text="{Binding Name, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         materialDesign:HintAssist.Foreground="Wheat"
                         materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
                             <TextBox 
@@ -99,7 +99,7 @@
                         FontSize="14"
                         Margin="10 0 0 0"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding Duration, Mode=TwoWay}"
+                        Text="{Binding Duration, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         VerticalAlignment="Center"
                         materialDesign:HintAssist.Foreground="Wheat"
                         materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
@@ -108,7 +108,7 @@
                         FontSize="14"
                         Margin="10 0 0 0"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding Price, Mode=TwoWay}"
+                        Text="{Binding Price, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         VerticalAlignment="Center"
                         materialDesign:HintAssist.Foreground="Wheat"
                         materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
@@ -117,7 +117,7 @@
                         FontSize="14"
                         Margin="10 0 0 0"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding TicketAmount, Mode=TwoWay}"
+                        Text="{Binding TicketAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         VerticalAlignment="Center"
                         materialDesign:HintAssist.Foreground="Wheat"
                         materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
@@ -126,7 +126,7 @@
                         FontSize="14"
                         Margin="10 0 0 0"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding TicketPrice, Mode=TwoWay}"
+                        Text="{Binding TicketPrice, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         VerticalAlignment="Center"
                         materialDesign:HintAssist.Foreground="Wheat"
                         materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
@@ -140,16 +140,24 @@
                     FontSize="14"
                     Margin="10 20 0 0"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding ExDate, Mode=TwoWay}"
+
                     VerticalAlignment="Center"
                     materialDesign:HintAssist.Foreground="Wheat"
-                    materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
+                    materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue">
+                                <TextBox.Text>
+                                    <Binding Path = "ExDate" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" Mode="TwoWay"><!--Text="{Binding ExDate, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
+                                        <Binding.ValidationRules>
+                                            <validationformats:DateValidationRule/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                             <ComboBox 
                           materialDesign:HintAssist.Hint="Type"
                           materialDesign:HintAssist.HintOpacity=".68"
                           materialDesign:HintAssist.Foreground="Wheat"
                           materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="16"  Margin="10,13,0,0"
-                          Text="{Binding Type, Mode=TwoWay}">
+                          Text="{Binding Type, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                 <ComboBoxItem Foreground="Black">
                                     Городская
                                 </ComboBoxItem >
@@ -170,7 +178,7 @@
                     materialDesign:HintAssist.Hint="Description"
                     FontSize="14"
                     Margin="10 0 0 0"
-                    Text="{Binding Description, Mode=TwoWay}"
+                    Text="{Binding Description, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                     VerticalAlignment="Center"
                     materialDesign:HintAssist.Foreground="Wheat"
@@ -181,7 +189,7 @@
                         FontSize="14"
                         Margin="10 0 0 0"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding TicketNotes, Mode=TwoWay}"
+                        Text="{Binding TicketNotes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         VerticalAlignment="Center"
                         materialDesign:HintAssist.Foreground="Wheat"
                         materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
@@ -251,7 +259,7 @@
                         FontSize="14"
                         Margin="10 20 0 0"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        VerticalAlignment="Center" Text="{Binding SName, Mode=TwoWay}"
+                        VerticalAlignment="Center" Text="{Binding SName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         materialDesign:HintAssist.Foreground="Wheat"
                         materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
                             <TextBox 
@@ -259,7 +267,7 @@
                         FontSize="14"
                         Margin="10 0 0 0"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding PName, Mode=TwoWay}"
+                        Text="{Binding PName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         VerticalAlignment="Center"
                         materialDesign:HintAssist.Foreground="Wheat"
                         materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
@@ -268,16 +276,24 @@
                         FontSize="14"
                         Margin="10 0 0 0"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding PhoneNumber, Mode=TwoWay}"
+                        
                         VerticalAlignment="Center"
                         materialDesign:HintAssist.Foreground="Wheat"
-                        materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
+                        materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue">
+                                <TextBox.Text>
+                                    <Binding Path = "PhoneNumber" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" Mode="TwoWay"><!--Text="{Binding PhoneNumber, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
+                                        <Binding.ValidationRules>
+                                            <validationformats:DateValidationRule/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
                             <TextBox
                         materialDesign:HintAssist.Hint="Email"
                         FontSize="14"
                         Margin="10 0 0 0"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding Email, Mode=TwoWay}"
+                        Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         VerticalAlignment="Center"
                         materialDesign:HintAssist.Foreground="Wheat"
                         materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
@@ -291,7 +307,7 @@
                     FontSize="14"
                     Margin="10 20 0 0"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                    Text="{Binding Login, Mode=TwoWay}"
+                    Text="{Binding Login, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     VerticalAlignment="Center"
                     materialDesign:HintAssist.Foreground="Wheat"
                     materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
@@ -299,7 +315,7 @@
                     materialDesign:HintAssist.Hint="Password"
                     FontSize="14"
                     Margin="10 0 0 0"
-                    Text="{Binding Password, Mode=TwoWay}"
+                    Text="{Binding Password, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Style="{StaticResource MaterialDesignFloatingHintTextBox}"
                     VerticalAlignment="Center"
                     materialDesign:HintAssist.Foreground="Wheat"
@@ -309,10 +325,18 @@
                         FontSize="14"
                         Margin="10 0 0 0"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        Text="{Binding Birthday, Mode=TwoWay}"
+
                         VerticalAlignment="Center"
                         materialDesign:HintAssist.Foreground="Wheat"
-                        materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
+                        materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue">
+                                <TextBox.Text>
+                                    <Binding Path = "Birthday" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True" Mode="TwoWay"><!--Text="{Binding Birthday, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"-->
+                                        <Binding.ValidationRules>
+                                            <validationformats:DateValidationRule/>
+                                        </Binding.ValidationRules>
+                                    </Binding>
+                                </TextBox.Text>
+                            </TextBox>
 
                             <Button Width="125" Height="40" Margin="10 56 0 0" Content="Изменить" Command="{Binding ChangeClientCommand}" HorizontalAlignment="Center"/>
                         </StackPanel>
@@ -364,7 +388,7 @@
                           materialDesign:HintAssist.Hint="Клиенты"
                           materialDesign:HintAssist.HintOpacity=".68"
                           materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="16"  Margin="10,20,0,0"
-                          ItemsSource="{Binding Clients}" SelectedItem="{Binding CurrentClientReservation, Mode=TwoWay}">
+                          ItemsSource="{Binding Clients}" SelectedItem="{Binding CurrentClientReservation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                 <ComboBox.ItemContainerStyle>
                                     <Style TargetType="{x:Type ComboBoxItem}">
                                         <Setter Property="Foreground" Value="Black" />
@@ -377,7 +401,7 @@
                         FontSize="14"
                         Margin="10 0 0 0"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        VerticalAlignment="Center" Text="{Binding TicketSaleClientsTicketAmount, Mode=TwoWay}"
+                        VerticalAlignment="Center" Text="{Binding TicketSaleClientsTicketAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         materialDesign:HintAssist.Foreground="Wheat"
                         materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
 
@@ -390,7 +414,7 @@
                           materialDesign:HintAssist.HintOpacity=".68"
                           materialDesign:HintAssist.Foreground="Wheat"
                           materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="16"  Margin="10,20,0,0"
-                          ItemsSource="{Binding ExcursionList}" SelectedItem="{Binding CurrentExcursionReservation, Mode=TwoWay}">
+                          ItemsSource="{Binding ExcursionList}" SelectedItem="{Binding CurrentExcursionReservation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                 <ComboBox.ItemContainerStyle>
                                     <Style TargetType="{x:Type ComboBoxItem}">
                                         <Setter Property="Foreground" Value="Black" />
@@ -448,7 +472,7 @@
                           materialDesign:HintAssist.Hint="Гости"
                           materialDesign:HintAssist.HintOpacity=".68"
                           materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="16"  Margin="10,20,0,0"
-                          ItemsSource="{Binding Guests}" SelectedItem="{Binding CurrentGuestReservation, Mode=TwoWay}">
+                          ItemsSource="{Binding Guests}" SelectedItem="{Binding CurrentGuestReservation, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                 <ComboBox.ItemContainerStyle>
                                     <Style TargetType="{x:Type ComboBoxItem}">
                                         <Setter Property="Foreground" Value="Black" />
@@ -461,7 +485,7 @@
                         FontSize="14"
                         Margin="10 0 0 0"
                         Style="{StaticResource MaterialDesignFloatingHintTextBox}"
-                        VerticalAlignment="Center" Text="{Binding TicketSaleGuestsTicketAmount, Mode=TwoWay}"
+                        VerticalAlignment="Center" Text="{Binding TicketSaleGuestsTicketAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                         materialDesign:HintAssist.Foreground="Wheat"
                         materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue"/>
 
@@ -474,7 +498,7 @@
                           materialDesign:HintAssist.HintOpacity=".68"
                           materialDesign:HintAssist.Foreground="Wheat"
                           materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="16"  Margin="10,20,0,0"
-                          ItemsSource="{Binding ExcursionList}" SelectedItem="{Binding CurrentExcursionReservationGuest, Mode=TwoWay}">
+                          ItemsSource="{Binding ExcursionList}" SelectedItem="{Binding CurrentExcursionReservationGuest, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}">
                                 <ComboBox.ItemContainerStyle>
                                     <Style TargetType="{x:Type ComboBoxItem}">
                                         <Setter Property="Foreground" Value="Black" />

@@ -46,6 +46,11 @@ namespace MVVM_LightKit.ViewModel
             selectExcursion.Show();
         }
 
+        public bool CanExecuteRegisterCommand()
+        {
+            return !string.IsNullOrEmpty(CurrentClient.SName) && !string.IsNullOrEmpty(CurrentClient.PName);
+        }
+
 
         RelayCommand applicationExit;
         public RelayCommand ApplicationExit

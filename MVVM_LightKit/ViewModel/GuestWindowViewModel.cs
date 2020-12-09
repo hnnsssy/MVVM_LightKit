@@ -38,17 +38,14 @@ namespace MVVM_LightKit.ViewModel
             get
             {
                 if (loginCommand == null)
-                    loginCommand = new RelayCommand(ExecuteLoginCommand, true);
+                    loginCommand = new RelayCommand(ExecuteLoginCommand, CanExecuteLoginCommand);
                 return loginCommand;
             }
         }
 
-        /// <summary>
-        /// В методе выполняеться проверка на правильность введённых данных. Если проверка прошла успешно, то откроеться окно выбора экскурсий
-        /// </summary>
         public void ExecuteLoginCommand()
         {
-            Guest tmpGuest = Repositories.RGuests.FindAll(x => x.SName == currentGuest.SName && x.PName == currentGuest.PName).FirstOrDefault(); //ЯКЩО ПРОСТО FIRST, ТО БУДЕ ЕКСЕШПН, БО ТАБЛИЦЯ ПУСТА
+            Guest tmpGuest = Repositories.RGuests.FindAll(x => x.SName == currentGuest.SName && x.PName == currentGuest.PName).FirstOrDefault();
             if (tmpGuest == null)
             {
                 Repositories.RGuests.Add(CurrentGuest);
@@ -60,9 +57,14 @@ namespace MVVM_LightKit.ViewModel
             System.Windows.Application.Current.Resources["PhoneNumber"] = CurrentGuest.PhoneNumber;
             IsWindowVisible = false;
             SelectExcursion selectExcursion = new SelectExcursion();
-            selectExcursion.Show(); //сюда треба буде передавати обжект, бо цю таблицю може використовувати і користувач і гість
+            selectExcursion.Show();
         }
 
+
+        public bool CanExecuteLoginCommand()
+        {
+            return !string.IsNullOrEmpty(CurrentGuest.SName) && !string.IsNullOrEmpty(CurrentGuest.PName) && !string.IsNullOrEmpty(CurrentGuest.PhoneNumber);
+        }
 
 
         RelayCommand applicationExit;

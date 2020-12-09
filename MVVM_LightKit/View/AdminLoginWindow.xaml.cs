@@ -15,11 +15,11 @@ using System.Windows.Shapes;
 namespace MVVM_LightKit.View
 {
     /// <summary>
-    /// Interaction logic for RegistrationWindow.xaml
+    /// Interaction logic for AdminLoginWindow.xaml
     /// </summary>
-    public partial class RegistrationWindow : Window
+    public partial class AdminLoginWindow : Window
     {
-        public RegistrationWindow()
+        public AdminLoginWindow()
         {
             InitializeComponent();
         }

@@ -110,7 +110,7 @@ namespace MVVM_LightKit.ViewModel
         private void button_Admin_Click()
         {
             IsWindowVisible = false;
-            AdminWindow adminWindow = new AdminWindow();
+            AdminLoginWindow adminWindow = new AdminLoginWindow();
             adminWindow.Show();
         }
         ////////////////////////////////////////////////////////

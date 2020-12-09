@@ -4,11 +4,11 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MVVM_LightKit.View" xmlns:intr="http://schemas.microsoft.com/expression/2010/interactivity"
-        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:vm="clr-namespace:MVVM_LightKit.ViewModel"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes" xmlns:vm="clr-namespace:MVVM_LightKit.ViewModel" xmlns:validationformats="clr-namespace:MVVM_LightKit.ValidationFormats"
         mc:Ignorable="d"
         Title="WelcomeWindow" Height="310" Width="320"
         AllowsTransparency="True" Background="Transparent"
-        WindowStyle="None" ResizeMode="NoResize" Visibility="{Binding IsWindowVisible,Mode=TwoWay,Converter={StaticResource BooleanToVisibilityConverter}}">
+        WindowStyle="None" ResizeMode="NoResize" Visibility="{Binding IsWindowVisible,Mode=TwoWay,Converter={StaticResource BooleanToVisibilityConverter}}" MouseDown="Window_MouseDown">
 
     <intr:Interaction.Triggers>
         <intr:EventTrigger EventName="Closing">
@@ -47,17 +47,25 @@
                              materialDesign:HintAssist.Foreground="AliceBlue"
                              materialDesign:HintAssist.HintOpacity=".80"
                              materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Path = CurrentGuest.SName}" FontSize="18" Foreground="AliceBlue" Width="250"/>
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Path = CurrentGuest.SName, UpdateSourceTrigger=PropertyChanged}" FontSize="18" Foreground="AliceBlue" Width="250"/>
                 <TextBox materialDesign:HintAssist.Hint="Фамилия" 
                              materialDesign:HintAssist.Foreground="AliceBlue"
                              materialDesign:HintAssist.HintOpacity=".80"
                              materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Path = CurrentGuest.PName}" FontSize="18" Foreground="AliceBlue" Width="250"/>
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Path = CurrentGuest.PName, UpdateSourceTrigger=PropertyChanged}" FontSize="18" Foreground="AliceBlue" Width="250"/>
                 <TextBox materialDesign:HintAssist.Hint="Номер телефона" 
                              materialDesign:HintAssist.Foreground="AliceBlue"
                              materialDesign:HintAssist.HintOpacity=".80"
                              materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue"
-                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding Path = CurrentGuest.PhoneNumber}" FontSize="18" Foreground="AliceBlue" Width="250"/>
+                             Style="{StaticResource MaterialDesignFloatingHintTextBox}" FontSize="18" Foreground="AliceBlue" Width="250"><!--Text="{Binding Path = CurrentGuest.PhoneNumber, UpdateSourceTrigger=PropertyChanged}"-->
+                    <TextBox.Text>
+                        <Binding Path = "CurrentGuest.PhoneNumber" UpdateSourceTrigger="PropertyChanged" ValidatesOnDataErrors="True">
+                            <Binding.ValidationRules>
+                                <validationformats:PhoneNumberValidationRule/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
                 <TextBlock Margin="31,0,0,0" Text="{Binding Path=Message}" Foreground="Red" Opacity=".50"></TextBlock>
             </StackPanel>
             <StackPanel Grid.Row="3">

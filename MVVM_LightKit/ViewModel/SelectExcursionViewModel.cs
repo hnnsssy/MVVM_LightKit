@@ -129,7 +129,7 @@ namespace MVVM_LightKit.ViewModel
             get
             {
                 if (searchParamDateTime == new DateTime())
-                    searchParamDateTime = DateTime.Now;
+                    searchParamDateTime = DateTime.Now.AddDays(5);
                 return searchParamDateTime;
             }
             set { searchParamDateTime = value; RaisePropertyChanged("SearchParamDateTime"); }

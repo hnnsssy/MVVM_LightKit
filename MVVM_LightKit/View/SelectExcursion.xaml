@@ -47,7 +47,7 @@
                           materialDesign:HintAssist.HintOpacity=".68"
                           materialDesign:HintAssist.Foreground="Wheat"
                           materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="18"  Margin="15,0,0,0"
-                          Text="{Binding SearchParamType}">
+                          Text="{Binding SearchParamType, UpdateSourceTrigger=PropertyChanged}">
                     <ComboBoxItem Foreground="Black">
                         Городская
                     </ComboBoxItem >
@@ -65,7 +65,14 @@
                     </ComboBoxItem>
                 </ComboBox>
 
-
+                <!--<TextBox
+              Style="{StaticResource MaterialDesignFloatingHintTextBox}"
+              materialDesign:HintAssist.Hint="Дата"
+              Text="{Binding Path=SearchParamDateTime, Mode=TwoWay}"
+              Margin="15 0 0 17"
+                materialDesign:HintAssist.Foreground="Wheat"
+                materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue"
+              VerticalAlignment="Top" Foreground="AliceBlue" FontSize="19" Width="110" Height="54" FontFamily="Segoe UI"/>-->
                 <DatePicker
                     Width="110"
                     materialDesign:HintAssist.Hint="Дата"
@@ -75,12 +82,12 @@
                     Margin="15,0,0,14"
                     SelectedDate="{Binding
                     Path=SearchParamDateTime,
-                    Mode=TwoWay}"
+                    Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                     Style="{StaticResource MaterialDesignFloatingHintDatePicker}" />
                 <TextBox
               Style="{StaticResource MaterialDesignFloatingHintTextBox}"
               materialDesign:HintAssist.Hint="Билеты"
-              Text="{Binding TicketAmount, Mode=TwoWay}"
+              Text="{Binding TicketAmount, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
               Margin="15 0 0 17"
                 materialDesign:HintAssist.Foreground="Wheat"
                 materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue"
@@ -92,7 +99,7 @@
                           materialDesign:HintAssist.Foreground="Wheat"
                           materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="18"
                           Margin="15,15,0,15"
-                          Text="{Binding SearchParamFrom}">
+                          Text="{Binding SearchParamFrom, UpdateSourceTrigger=PropertyChanged}">
                     <ComboBoxItem Foreground="Black" Content="от 1000"/>
                     <ComboBoxItem Foreground="Black" Content="от 2000"/>
                     <ComboBoxItem Foreground="Black" Content="от 3000"/>
@@ -104,7 +111,7 @@
                           materialDesign:HintAssist.Foreground="Wheat"
                           materialDesign:TextFieldAssist.UnderlineBrush="AliceBlue" Foreground="AliceBlue" FontSize="18"
                           Margin="15,15,0,15"
-                          Text="{Binding SearchParamTo}">
+                          Text="{Binding SearchParamTo, UpdateSourceTrigger=PropertyChanged}">
                     <ComboBoxItem Foreground="Black" Content="до 2000"/>
                     <ComboBoxItem Foreground="Black" Content="до 3000"/>
                     <ComboBoxItem Foreground="Black" Content="до 4000"/>

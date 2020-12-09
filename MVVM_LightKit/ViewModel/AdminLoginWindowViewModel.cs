@@ -1,17 +1,29 @@
 ﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.CommandWpf;
+using MVVM_LightKit.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using MVVM_LightKit.Model;
-using GalaSoft.MvvmLight.CommandWpf;
-using MVVM_LightKit.View;
 
 namespace MVVM_LightKit.ViewModel
 {
-    public class LoginWindowViewModel: ViewModelBase
+    class AdminLoginWindowViewModel : ViewModelBase
     {
+        private string login;
+        public string Login
+        {
+            get { return login; }
+            set { login = value; RaisePropertyChanged("Login"); }
+        }
+
+        private string password;
+        public string Password
+        {
+            get { return password; }
+            set { password = value; RaisePropertyChanged("Password"); }
+        }
 
         private string message;
         public string Message
@@ -19,19 +31,6 @@ namespace MVVM_LightKit.ViewModel
             get { return message; }
             set { message = value; RaisePropertyChanged("Message"); }
         }
-
-        private Client currentClient;
-        public Client CurrentClient
-        {
-            get
-            {
-                if (currentClient == null)
-                    currentClient = new Client();
-                return currentClient;
-            }
-            set { currentClient = value; RaisePropertyChanged("CurrentClient"); }
-        }
-
 
         RelayCommand loginCommand;
         public RelayCommand LoginCommand
@@ -44,23 +43,23 @@ namespace MVVM_LightKit.ViewModel
             }
         }
 
-        /// <summary>
-        /// В методе выполняеться проверка на правильность введённых данных. Если проверка прошла успешно, то откроеться окно выбора экскурсий
-        /// </summary>
         public void ExecuteLoginCommand()
         {
-            try { CurrentClient = Repositories.RClients.FindAll(x => x.Login == currentClient.Login && x.Password == currentClient.Password).First(); }
-            catch (Exception) { Message = "Неверный логин или пароль"; return; }
-            System.Windows.Application.Current.Resources["Login"] = CurrentClient.Login;
-            System.Windows.Application.Current.Resources["Password"] = CurrentClient.Password;
-            IsWindowVisible = false;
-            SelectExcursion selectExcursion = new SelectExcursion();
-            selectExcursion.Show();
+            if(Login == "admin" && Password == "1")
+            {
+                IsWindowVisible = false;
+                AdminWindow adminWindow = new AdminWindow();
+                adminWindow.Show();
+            }
+            else
+            {
+                Message = "Неверный логин или пароль";
+            }
         }
 
         public bool CanExecuteLoginCommand()
         {
-            return !string.IsNullOrEmpty(CurrentClient.Login) && !string.IsNullOrEmpty(CurrentClient.Password);
+            return !string.IsNullOrEmpty(Login) && !string.IsNullOrEmpty(Password);
         }
 
 
